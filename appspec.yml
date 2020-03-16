@@ -5,7 +5,7 @@ files:
     destination: /home/ubuntu/travis/maskMap
 
 
-# hooks:
-#   AfterInstall:
-#     - location: execute-deploy.sh
-#       timeout: 60
+hooks:
+  AfterInstall:
+    - location: execute-deploy.sh
+      timeout: 60
