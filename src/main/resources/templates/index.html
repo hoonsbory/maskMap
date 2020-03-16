@@ -54,7 +54,7 @@ body
 
 .slide
 {
-    background: #5ABEFF;
+    background: whitesmoke;
     display: none;
     width: 100%;
 }
@@ -86,9 +86,46 @@ body
 }
 #firstBar{
 	width: 100%;
-	height: 20px;
+	height: 50px;
 	display: inline-block;
 	position: fixed;
+	/* background-image: linear-gradient(to right,#0eca68,#00bf5f); */
+}
+#BarUl{
+	width: 100%;
+	height: 100%;
+	background-image: linear-gradient(to right,#0eca68,#00bf5f);
+}
+.storeList{
+	margin-top: 53px !important;
+	padding-left: 15px;
+	list-style:none;
+}
+@media(min-width: 769px){
+	.slideUp
+{
+	z-index: 998;
+    position: absolute;
+	height: 48%;
+	width: 690px;
+    bottom: 0;
+	overflow-y: auto;
+	left : 50%;
+	margin-left: -345px;
+}
+#firstBar{
+	width: 690px;
+	height: 50px;
+	display: inline-block;
+	position: fixed;
+	/* background-image: linear-gradient(to right,#0eca68,#00bf5f); */
+}
+#myPosition{
+	position: absolute;
+	bottom : 0;
+	right : 0;
+	z-index: 999;
+}
 }
 #firstBar button{
 	height : 64px;
@@ -137,6 +174,25 @@ body
 	z-index: 999;
 	top : 40px;
 }
+#BarUl a{
+	display: inline-block;
+    position: relative;
+    height: 51px;
+    margin: 0 4px 0 3px;
+    padding: 0 4px;
+    line-height: 51px;
+    color: transparent;
+    vertical-align: top;
+	color : white;
+	text-align: center;
+}
+#reSearch{
+	position: absolute;
+	right: 0;
+	top: 0;
+	background-color: white;
+	height: 51px;
+}
 </style>
 
 
@@ -164,37 +220,21 @@ body
 <!-- <button style="display : none" id="reverseSlideContentUp">Reverse Slide Up</button> -->
 <div class="slide slideUp">
 	<div id="firstBar">
-	<button id="nearby">거리순 정렬</button><button id="recentStock">입고순 정렬</button><button id="reSearch">재정렬</button>
+	<ul id="BarUl">
+		<a id="nearby" style="width : 22%">거리순</a>
+		<a id="recentStock" style="width : 22%">입고순</a>
+	</ul>	
+	<a id="reSearch" style="width : 44%;"></a>
+	
+	
 	
 	<!-- <div><img src="/static/img/loading25.gif" /></div> -->
 	</div>
-        <ul class="storeList"></ul>>
+        <ul class="storeList"></ul>
 </div>
 
 <script>
-	$('#slideContentDown').on('click', function()
-	{
-		$('.slideDown').slideDown();
-	});
-	$('#slideContentUp').on('click', function()
-	{
-		$('.slideDown').slideUp();
-	});
-	
-	$('#reverseSlideContentUp').on('click', function()
-	{
-		if($('#reverseSlideContentUp').text()=="up"){
-		$('.slideUp').slideDown();
-		$('#myPosition').animate({bottom:"48%"}, 400);
-		$('#reverseSlideContentUp').animate({bottom:"48%"}, 400);
-		$('#reverseSlideContentUp').html("down")
-		}else{
-		$('.slideUp').slideUp();
-		$('#myPosition').animate({bottom:"0%"}, 400);
-		$('#reverseSlideContentUp').animate({bottom:"0%"}, 400);
-		$('#reverseSlideContentUp').html("up")
-		}
-	});
+
 	
 	$(function() {
 		var excepted = false;
@@ -259,6 +299,78 @@ function placesSearchCB (data, status, pagination) {
 }
  
 }
+function searchPlaces() {
+
+var keyword = document.getElementById('keyword').value;
+
+if (!keyword.replace(/^\s+|\s+$/g, '')) {
+	alert('키워드를 입력해주세요!');
+	return false;
+}
+
+// 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+ps.keywordSearch( keyword, placesSearchCB); 
+}
+
+// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB(data, status, pagination) {
+if (status === kakao.maps.services.Status.OK) {
+
+	// 정상적으로 검색이 완료됐으면
+	// 검색 목록과 마커를 표출합니다
+	displayPlaces(data);
+
+	// 페이지 번호를 표출합니다
+	displayPagination(pagination);
+
+} else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+	alert('검색 결과가 존재하지 않습니다.');
+	return;
+
+} else if (status === kakao.maps.services.Status.ERROR) {
+
+	alert('검색 결과 중 오류가 발생했습니다.');
+	return;
+
+}
+}
+function displayPlaces(places) {
+
+var listEl = document.getElementById('placesList'), 
+menuEl = document.getElementById('menu_wrap'),
+fragment = document.createDocumentFragment(), 
+bounds = new kakao.maps.LatLngBounds(), 
+listStr = '';
+
+// 검색 결과 목록에 추가된 항목들을 제거합니다
+removeAllChildNods(listEl);
+
+// 지도에 표시되고 있는 마커를 제거합니다
+
+for ( var i=0; i<places.length; i++ ) {
+
+	// 마커를 생성하고 지도에 표시합니다
+	var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+		marker = addMarker(placePosition, i), 
+		itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+	// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	// LatLngBounds 객체에 좌표를 추가합니다
+
+	// 마커와 검색결과 항목에 mouseover 했을때
+	// 해당 장소에 인포윈도우에 장소명을 표시합니다
+	// mouseout 했을 때는 인포윈도우를 닫습니다
+
+	fragment.appendChild(itemEl);
+}
+
+// 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+listEl.appendChild(fragment);
+menuEl.scrollTop = 0;
+
+// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+}
 $("#address").keyup(function(){
 	if (window.event.keyCode == 13) {
  
@@ -300,9 +412,7 @@ function deg2rad(deg) {
  
  
 function sendAddress(){
-	// if(beforeOverlay[0]){
-	// beforeOverlay[0].setMap(null);
-	// }
+	
 	$(".loading").css("display","block")
 	var latlng = [map.getCenter().getLat(), map.getCenter().getLng()]
 	var latlngJson = JSON.stringify(latlng)
@@ -325,20 +435,16 @@ function sendAddress(){
 	})
 beforeMarker = [];
 overlayList = [];
-// result.stores.sort(function(a, b) {
-// 	return a.remain_stat
-// })
+
 
 
 		result.stores.forEach(i => {
-			console.log(i.lat+","+i.lng)
 			if(excepted==true && i.remain_stat!="plenty" && i.remain_stat!="some" && i.remain_stat!="few"){
 				return true;
 			}
 			if(!i.lat) return true;
 	var position = new kakao.maps.LatLng(
-	// southWest.lat() + (latSpan * Math.random()),
-	// southWest.lng() + (lngSpan * Math.random())
+
 	i.lat,i.lng
 );
 	
@@ -405,7 +511,7 @@ switch (jsonRemain) {
 	case '"few"': i.remain_stat = "2개 이상 30개 미만"
 		
 		break;
-	case '"empty"': i.remain_stat = "1개 이하"
+	case '"empty"': i.remain_stat = "품절"
 		
 		break;
 	case '"break"': i.remain_stat = "품절"
@@ -433,7 +539,7 @@ var content = '<div id="wrap" class="wrap">' +
 			'                <div class="jibun ellipsis">'+'재고 : '+i.remain_stat+'</div>' + 
             '                <div class="jibun ellipsis">'+'입고 시간 : '+i.type+'</div>' + 
 			'                <div class="jibun ellipsis">'+'거리 : '+i.code+'</div>' + 
-            '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">길찾기</a></div>' + 
+            '                <div><a href="https://map.kakao.com/link/to/'+i.name+","+i.lat+","+i.lng+'" target="_blank" class="link">길찾기</a></div>' + 
             '            </div>' + 
             '        </div>' + 
             '    </div>' +    
@@ -474,22 +580,7 @@ overlayList.push(overlay);
 			 $(".loading").css("display","none")
 	}
 
-// function recentStock(params) {
-// 	result.stores.forEach(i=>{
-// 		var test2 = i.stock_at.substring(0,4)
-// 		test2 += i.stock_at.substring(5,7)
-// 		test2 += i.stock_at.substring(8,10)
-// 		test2 += i.stock_at.substring(11,13)
-// 		test2 += i.stock_at.substring(14,16)
-// 		i.stock_at = test2
-// 	})
-// 	result.stores.sort(function(a,b){
-// 		return a.stock_at - b.stock_at;
-// 	})
-// 	console.log(result.stores)
-// }
-// $("#nearby").attr('disabled', false)
-		
+
 
 
     },
@@ -505,6 +596,12 @@ overlayList.push(overlay);
 
 function nearby() {
 	$(".storeLi").remove();
+	if(!result.stores[0]){
+		console.log("123")
+		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+		$(".storeList").append(noStores)
+		return
+	}
 navigator.geolocation.getCurrentPosition(function(pos){
 	var centerLat = pos.coords.latitude;
 	var centerLng = pos.coords.longitude;
@@ -521,6 +618,7 @@ result.stores.sort(function(a,b){
 
 var count = 1;
 var mostClose = 0;
+var emptyCount = false;
 result.stores.forEach(i=>{
 	if(excepted==true && i.remain_stat!="100개 이상" && i.remain_stat!="30개 이상 100개 미만" && i.remain_stat!="2개 이상 30개 미만"){
 		mostClose++;
@@ -530,6 +628,7 @@ result.stores.forEach(i=>{
 			mostClose++;
 			return true;
 		}
+		emptyCount = true;
 	if(i.code!=0){
 	if(i.code>=1000){
 		i.code = i.code/1000
@@ -565,8 +664,7 @@ result.stores.forEach(i=>{
 // 마커 위에 커스텀오버레이를 표시합니다
 // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 var position = new kakao.maps.LatLng(
-	// southWest.lat() + (latSpan * Math.random()),
-	// southWest.lng() + (lngSpan * Math.random())
+	
 	i.lat,i.lng
 );
  var overlay = new kakao.maps.CustomOverlay({
@@ -610,27 +708,25 @@ var position = new kakao.maps.LatLng(
 	}	
 	count++;
 })
+if(emptyCount==false){
+		console.log("123")
+		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+		$(".storeList").append(noStores)
+		return
+	}
 
 })
-	// $("#nearby").attr('disabled', true)
 	menuSwitch = "distance";
 	$(".slideUp").scrollTop(0);
 }
 function recentStock(){
-	console.log("왜안대 띠바")
 	$(".storeLi").remove();
-	// addressData.stores.forEach(i=>{
-	// 	if(JSON.stringify(i.stock_at)=="null"){
-	// 			i.stock_at = "정보 없음"
-	// 	}else{
-	// 	var test2 = i.stock_at.substring(0,4)
-	// 	test2 += i.stock_at.substring(5,7)
-	// 	test2 += i.stock_at.substring(8,10)
-	// 	test2 += i.stock_at.substring(11,13)
-	// 	test2 += i.stock_at.substring(14,16)
-	// 	i.stock_at = test2
-	// 	}
-	// }) 
+	
+	if(!result.stores[0]){
+		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+		$(".storeList").append(noStores)
+		return
+	}
 	result.stores.forEach(i=>{
 		
 		if(!i.stock_at || JSON.stringify(i.stock_at)=="null"){
@@ -651,10 +747,9 @@ function recentStock(){
 		return b.type - a.type;
 	})
 		var count = 1;
-
+	var emptyCount = false;
 	var mostClose = 0;	
 	result.stores.forEach(i=>{
-		console.log(i.remain_stat)
 		if(excepted==true && i.remain_stat!="100개 이상" && i.remain_stat!="30개 이상 100개 미만" && i.remain_stat!="2개 이상 30개 미만"){
 			mostClose++;
 				return true;
@@ -663,7 +758,7 @@ function recentStock(){
 			mostClose++;
 			return true;
 		}
-		console.log("ghdlWK")
+		emptyCount = true;
 		if(i.type==999)i.type = "입고 대기"
 	if(i.type!="입고 대기"){
 		var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
@@ -682,21 +777,7 @@ function recentStock(){
 		}
 }
 		
-	// for(var j=0; j<overlayList.length; j++){	
-	// 	// console.log(j.getPosition())
-	// 	// console.log(j.getPosition().Ha)
-	// 	// console.log(j.getPosition().Ga)
-	// 	// console.log(i.lat)
-	// 	// console.log(j)
-	// 	console.log("이전"+overlayList[j].getPosition().Ha+","+overlayList[j].getPosition().Ga)
-	// 	console.log("지금"+	i.lat+","+i.lng)
-	// 	if(overlayList[j].getPosition().Ha==i.lat&& overlayList[j].getPosition().Ga==i.lng){
-	// 		count2 = j;
-	// 		// console.log(j)
-	// 		break;
-	// 	}
-
-	// }
+	
 	var contentList = '<li class="storeLi"><div><a class="storename'+count+'">'+i.lat+"/"+i.lng+'</a></div><div><strong>'+i.name+'</storong></div><div><span>'+i.type+'</span></div><div><span>'+i.code+'</span></div><div><span>'+i.remain_stat+'</span></div></li>'
 		$(".storeList").append(contentList)
 	var count2 = 0;
@@ -740,7 +821,6 @@ var position = new kakao.maps.LatLng(
 
 	$(".storename"+count).click(function(){
 		dragEventSWitch = false;
-	// 	console.log(i.lat+","+i.lat)
 		if(dragEventSWitch==false) panTo(i.lat,i.lng);
 	if(beforeOverlay[0]){
 	beforeOverlay[0].setMap(null);
@@ -748,13 +828,7 @@ var position = new kakao.maps.LatLng(
 	beforeOverlay = [];
     overlay.setMap(map);
 	beforeOverlay.push(overlay);
-	// for(var z = 0; z<10000; z++){
-	// 	if(document.getElementById(i.name)){
-	// 		console.log(z)
-	// 		console.log(document.getElementById(i.name))
-	// 		break;
-	// 	}
-	// }
+	
 	setTimeout(function() {
 	document.getElementById(i.addr).appendChild(close)
 	document.getElementById("wrap").parentNode.style.zIndex = "900"
@@ -778,7 +852,12 @@ var position = new kakao.maps.LatLng(
 	count++;
 
 	})
-
+	if(emptyCount==false){
+		console.log("123")
+		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+		$(".storeList").append(noStores)
+		return
+	}
 
 	menuSwitch = "stock";
 	$(".slideUp").scrollTop(0);
@@ -813,6 +892,32 @@ $("#excepted").click(function(){
 		sendAddress();
 	}
 })
+$('#slideContentDown').on('click', function()
+	{
+		$('.slideDown').slideDown();
+	});
+	$('#slideContentUp').on('click', function()
+	{
+		$('.slideDown').slideUp();
+	});
+	
+	$('#reverseSlideContentUp').on('click', function()
+	{
+		if($('#reverseSlideContentUp').text()=="up"){
+		if(document.getElementsByClassName("storeList")[0].childElementCount==0){
+			recentStock();
+		}	
+		$('.slideUp').slideDown();
+		$('#myPosition').animate({bottom:"48%"}, 400);
+		$('#reverseSlideContentUp').animate({bottom:"48%"}, 400);
+		$('#reverseSlideContentUp').html("down")
+		}else{
+		$('.slideUp').slideUp();
+		$('#myPosition').animate({bottom:"0%"}, 400);
+		$('#reverseSlideContentUp').animate({bottom:"0%"}, 400);
+		$('#reverseSlideContentUp').html("up")
+		}
+	});
 function myPosition(){
 if (navigator.geolocation) {
 						if(myPositionMarker[0]) {
@@ -846,7 +951,50 @@ kakao.maps.event.addListener(map, 'tilesloaded', function() {
 	}
 }); 
 	});
+	function getAddr(){
+	$.ajax({
+		 url :"http://www.juso.go.kr/addrlink/addrCoordApiJsonp.do"  //인터넷망
+		,type:"post"
+		,data:$("#form").serialize()
+		,dataType:"jsonp"
+		,crossDomain:true
+		,success:function(jsonStr){
+			$("#list").html("");
+			var errCode = jsonStr.results.common.errorCode;
+			var errDesc = jsonStr.results.common.errorMessage;
+			if(errCode != "0"){
+				alert(errCode+"="+errDesc);
+			}else{
+				if(jsonStr != null){
+					makeListJson(jsonStr);
+				}
+			}
+		}
+	    ,error: function(xhr,status, error){
+	    	alert("에러발생");
+	    }
+	});
+}
 
+function makeListJson(jsonStr){
+	var htmlStr = "";
+	htmlStr += "<table>";
+	$(jsonStr.results.juso).each(function(){
+		htmlStr += "<tr>";
+		htmlStr += "<td>"+this.admCd+"</td>";
+		htmlStr += "<td>"+this.rnMgtSn+"</td>";
+		htmlStr += "<td>"+this.bdMgtSn+"</td>";
+		htmlStr += "<td>"+this.udrtYn+"</td>";
+		htmlStr += "<td>"+this.buldMnnm+"</td>";
+		htmlStr += "<td>"+this.buldSlno+"</td>";
+		htmlStr += "<td>"+this.entX+"</td>";
+		htmlStr += "<td>"+this.entY+"</td>";
+		htmlStr += "<td>"+this.bdNm+"</td>";
+		htmlStr += "</tr>";
+	});
+	htmlStr += "</table>";
+	$("#list").html(htmlStr);
+}
 
 	</script>
 
