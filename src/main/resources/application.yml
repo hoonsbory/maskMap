@@ -1,0 +1,12 @@
+spring:
+  
+    mvc:
+        static-path-pattern: /static/**
+    resources:
+        static-locations: classpath:/static/
+        add-mappings: true
+         
+
+
+server: 
+    port: 8888
