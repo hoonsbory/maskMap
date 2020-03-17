@@ -3,8 +3,9 @@ sudo docker stop maskmap
 sudo docker rm maskmap
 sudo docker rmi maskmap
 
+cd /home/ubuntu/travis/maskMap
+
 sudo docker build -t maskmap .
 
-sleep 5
 
 sudo docker run -d --name maskmap maskmap
