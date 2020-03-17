@@ -221,8 +221,8 @@ body
 <div class="slide slideUp">
 	<div id="firstBar">
 	<ul id="BarUl">
-		<a id="nearby" style="width : 22%">거리순</a>
 		<a id="recentStock" style="width : 22%">입고순</a>
+		<a id="nearby" style="width : 22%">거리순</a>
 	</ul>	
 	<a id="reSearch" style="width : 44%;"></a>
 	
@@ -692,20 +692,20 @@ var position = new kakao.maps.LatLng(
 	dragEventSWitch = true;
 // }, 400);
 	})
-	if(count==1){
-		panTo(result.stores[mostClose].lat,result.stores[mostClose].lng);
-		if(beforeOverlay[0]){
-			beforeOverlay[0].setMap(null);
-		}
-		beforeOverlay = [];
-		overlay.setMap(map);
-		beforeOverlay.push(overlay);
-		// setTimeout(function() {
-	document.getElementById(i.addr).appendChild(close)
-	document.getElementById("wrap").parentNode.style.zIndex = "900"
-	dragEventSWitch = true;
-// }, 400);
-	}	
+// 	if(count==1){
+// 		panTo(result.stores[mostClose].lat,result.stores[mostClose].lng);
+// 		if(beforeOverlay[0]){
+// 			beforeOverlay[0].setMap(null);
+// 		}
+// 		beforeOverlay = [];
+// 		overlay.setMap(map);
+// 		beforeOverlay.push(overlay);
+// 		// setTimeout(function() {
+// 	document.getElementById(i.addr).appendChild(close)
+// 	document.getElementById("wrap").parentNode.style.zIndex = "900"
+// 	dragEventSWitch = true;
+// // }, 400);
+// 	}	
 	count++;
 })
 if(emptyCount==false){
@@ -835,20 +835,20 @@ var position = new kakao.maps.LatLng(
 	dragEventSWitch = true;
 // }, 400);
 	})
-	if(count==1){
-		panTo(result.stores[mostClose].lat,result.stores[mostClose].lng);
-		if(beforeOverlay[0]){
-			beforeOverlay[0].setMap(null);
-		}
-		beforeOverlay = [];
-		overlay.setMap(map);
-		beforeOverlay.push(overlay);
-		// setTimeout(function() {
-	document.getElementById(i.addr).appendChild(close)
-	document.getElementById("wrap").parentNode.style.zIndex = "900"
-	dragEventSWitch = true;
-// }, 400);
-	}	
+// 	if(count==1){
+// 		panTo(result.stores[mostClose].lat,result.stores[mostClose].lng);
+// 		if(beforeOverlay[0]){
+// 			beforeOverlay[0].setMap(null);
+// 		}
+// 		beforeOverlay = [];
+// 		overlay.setMap(map);
+// 		beforeOverlay.push(overlay);
+// 		// setTimeout(function() {
+// 	document.getElementById(i.addr).appendChild(close)
+// 	document.getElementById("wrap").parentNode.style.zIndex = "900"
+// 	dragEventSWitch = true;
+// // }, 400);
+// 	}	
 	count++;
 
 	})
