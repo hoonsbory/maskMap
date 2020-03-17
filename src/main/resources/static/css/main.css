@@ -1,0 +1,187 @@
+.loading {
+    width : 64px;
+    height: 64px;
+    position: absolute;
+    left : 50%;
+    top : 50%;
+    margin-left : -32px;
+    margin-top : -32px;
+    z-index: 999;
+}
+.wrap {z-index: 99999; position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+.wrap * {padding: 0;margin: 0;}
+.wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+.wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+.info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+.info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+.info .close:hover {cursor: pointer;}
+.info .body {position: relative;overflow: hidden;}
+.info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+.info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+.info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+.info .link {color: #5085BB;}
+
+@import 'https://fonts.googleapis.com/css?family=Lato';
+body
+{
+background:white;
+font-family: 'Lato', sans-serif;
+font-size: 150%;
+}
+
+.slideUp li{
+border-bottom : 1px solid black;
+}
+
+.slide
+{
+background: whitesmoke;
+display: none;
+width: 100%;
+}
+#reverseSlideContentUp{
+position: absolute;
+bottom: 0;
+z-index: 998;
+width: 50px;
+left : 50%;
+margin-left: -25px;
+
+}
+/* #reverse
+{
+padding-bottom: 10rem;
+position: absolute;
+bottom : 0;
+height: 45%;
+width: 100%;
+} */
+.slideUp
+{
+z-index: 998;
+position: absolute;
+height: 48%;
+width: 100%;
+bottom: 0;
+}
+#firstBar{
+width: 100%;
+height: 50px;
+display: inline-block;
+position: fixed;
+/* background-image: linear-gradient(to right,#0eca68,#00bf5f); */
+}
+#BarUl{
+width: 100%;
+height: 100%;
+background-image: linear-gradient(to right,#0eca68,#00bf5f);
+}
+.storeList{
+margin-top: 53px !important;
+padding-left: 15px;
+list-style:none;
+}
+.scrollDiv{
+height: 100%;
+overflow-y: scroll;
+}
+@media(min-width: 769px){
+.slideUp
+{
+z-index: 998;
+position: absolute;
+height: 48%;
+width: 690px;
+bottom: 0;
+left : 50%;
+margin-left: -345px;
+}
+#firstBar{
+width: 690px;
+height: 50px;
+display: inline-block;
+position: fixed;
+/* background-image: linear-gradient(to right,#0eca68,#00bf5f); */
+}
+#myPosition{
+position: absolute;
+bottom : 0;
+right : 0;
+z-index: 999;
+}
+}
+#firstBar button{
+height : 64px;
+width : 25%;
+}
+#firstBar img{
+width : 50%;
+display: inline;
+}
+#myPosition{
+position: absolute;
+bottom : 0;
+right : 0;
+z-index: 999;
+}
+#topBar{
+position: absolute;
+height : 40px;
+background-color: aquamarine;
+top : 0;
+display: inline-block;
+z-index: 998;
+width: 100%;
+text-align: center;
+}
+#date{
+position: absolute;
+left : 0;
+}
+#mainTitle{
+position: relative;
+}
+#notice{
+position: absolute;
+right : 0;
+}
+#address{
+position: absolute;
+top : 40px;
+left : 0;
+z-index: 998;
+}
+#excepted{
+position: absolute;
+right: 0;
+z-index: 999;
+top : 40px;
+}
+#centerChange{
+position: absolute;
+right: 0;
+z-index: 999;
+top : 100px;
+display: none;
+}
+#BarUl a{
+display: inline-block;
+position: relative;
+height: 51px;
+margin: 0 4px 0 3px;
+padding: 0 4px;
+line-height: 51px;
+color: transparent;
+vertical-align: top;
+color : white;
+text-align: center;
+}
+#reSearch{
+position: absolute;
+right: 0;
+top: 0;
+background-color: white;
+height: 51px;
+}
