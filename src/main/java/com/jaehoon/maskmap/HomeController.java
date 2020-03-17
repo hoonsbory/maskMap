@@ -62,7 +62,7 @@ public class HomeController {
     @RequestMapping(value = "/address" , method = RequestMethod.POST)
 	@ResponseBody
 	public String address(@RequestBody String[] address) {
-        String url = "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+address[0]+"&lng="+address[1]+"&m=1200";
+        String url = "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+address[0]+"&lng="+address[1]+"&m=1500";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8"))); // Response Header to
