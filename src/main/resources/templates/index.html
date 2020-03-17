@@ -284,7 +284,15 @@ function closeOverlay() {
     beforeOverlay[0].setMap(null);     
 }
 // 주소-좌표 변환 객체를 생성합니다
-
+function doubleClick(name){
+		var close = document.createElement('div')
+			close.className = "close"
+			close.onclick = closeOverlay
+	console.log(document.getElementById(name))
+	console.log(name)
+			document.getElementById(name).appendChild(close)
+			document.getElementById("wrap").parentNode.style.zIndex = "900"
+	}
 
 
 // 주소로 좌표를 검색합니다
@@ -423,7 +431,7 @@ function deg2rad(deg) {
 		 
 		 return (dist);
 	 }
- 
+	 
  
 function sendAddress(){
 	$(".storeLi").remove();
@@ -628,8 +636,6 @@ $(".loading").css("display","none")
 
 }
 
-console.log(result.stores.length)
-console.log(result.stores)
 
 
     },
@@ -647,7 +653,6 @@ console.log(result.stores)
 	 
 	$(".storeLi").remove();
 	if(!result2.stores[0]){
-		console.log("123")
 		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
 		$(".storeList").append(noStores)
 		return
@@ -675,13 +680,11 @@ $(".scrollDiv").remove();
 	var divCount = 0;
 	
 	function scrollContent(){
-		console.log(result.stores)
 		var counter = 0;
 		var breakCount = 0;
 		
 		
 		result2.stores.some(i=>{
-			console.log(counter)
 			if(divCount>counter){
 				counter++;
 				return false;
@@ -717,7 +720,6 @@ $(".scrollDiv").remove();
             '    <div class="info">' + 
             '        <div id="'+i.addr+'" class="title">' + 
             i.name + 
-            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
             '        </div>' + 
             '        <div class="body">' + 
             '            <div class="img">' +
@@ -750,48 +752,34 @@ var position = new kakao.maps.LatLng(
 			close.className = "close"
 			close.onclick = closeOverlay
 
-	$(".storename"+count).click(function(){
-		dragEventSWitch = false;
-		if(dragEventSWitch==false) panTo(i.lat,i.lng);
-	if(beforeOverlay[0]){
-	beforeOverlay[0].setMap(null);
-	}
-	beforeOverlay = [];
-    overlay.setMap(map);
-	beforeOverlay.push(overlay);
-	
-	// setTimeout(function() {
-	document.getElementById(i.addr).appendChild(close)
-	document.getElementById("wrap").parentNode.style.zIndex = "900"
-	dragEventSWitch = true;
-// }, 400);
+			$(".storename"+count).click(async function(){
+				dragEventSWitch = false;
+				if(dragEventSWitch==false) panTo(i.lat,i.lng);
+				if(beforeOverlay[0]){
+					beforeOverlay[0].setMap(null);
+				}
+				beforeOverlay = [];
+				await overlay.setMap(map);
+				beforeOverlay.push(overlay);
+				// if(!document.getElementById(i.addr)){
+					// 	console.log(document.getElementById(i.addr))
+					// 	doubleClick(i.addr)
+					// }
+					setTimeout(() => {
+						document.getElementById(i.addr).appendChild(close)
+						
+					}, 400);
+		dragEventSWitch = true;
 	})
-// 	if(count==1){
-// 		panTo(result.stores[mostClose].lat,result.stores[mostClose].lng);
-// 		if(beforeOverlay[0]){
-// 			beforeOverlay[0].setMap(null);
-// 		}
-// 		beforeOverlay = [];
-// 		overlay.setMap(map);
-// 		beforeOverlay.push(overlay);
-// 		// setTimeout(function() {
-// 	document.getElementById(i.addr).appendChild(close)
-// 	document.getElementById("wrap").parentNode.style.zIndex = "900"
-// 	dragEventSWitch = true;
-// // }, 400);
-// 	}	
+	
 	count++;
-
+	
 	
 	divCount++;
 	counter++;
 	breakCount++;
-	console.log(divCount)
-	console.log(counter)
 	if(result2.stores.length<7 && breakCount==result2.stores.length) return true;
 	if(breakCount==7) {
-		console.log(breakCount)
-		console.log(result.stores.length)
 		
 		return true;
 	}
@@ -803,15 +791,12 @@ var position = new kakao.maps.LatLng(
 	$(".scrollDiv").on("scroll", function() {
 	var scrollHeight = $(".storeList").height();
 	var scrollPosition = $(".scrollDiv").height() + $(".scrollDiv").scrollTop();		
-	console.log(scrollPosition)
-		console.log(scrollHeight)
 	if(scrollPosition > scrollHeight - 50&& divCount!=result2.stores.length){ 
 		scrollContent();
 		// exe 
 	} 
 });
 if(emptyCount==false){
-		console.log("123")
 		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
 		$(".storeList").append(noStores)
 		return
@@ -861,10 +846,8 @@ function recentStock(){
 		var counter = 0;
 		var breakCount = 0;
 		
-			console.log(divCount)
 			
 		result.stores.some(i=>{
-			console.log(counter)
 			if(divCount>counter){
 				counter++;
 				return false;
@@ -885,8 +868,6 @@ function recentStock(){
 			emptyCount = true;
 		if(i.type==999)i.type = "입고 대기"
 	if(i.type!="입고 대기"){
-		console.log(i.type)
-		console.log(i.name)
 		var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
 		var today = new Date();
 		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
@@ -901,7 +882,6 @@ function recentStock(){
 				i.type = Math.round(betweenDay)+"분 전"
 			}
 		}
-		console.log(i.type)
 }
 		
 	
@@ -913,7 +893,6 @@ function recentStock(){
             '    <div class="info">' + 
             '        <div id="'+i.addr+'" class="title">' + 
             i.name + 
-            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
             '        </div>' + 
             '        <div class="body">' + 
             '            <div class="img">' +
@@ -933,8 +912,7 @@ function recentStock(){
 // 마커 위에 커스텀오버레이를 표시합니다
 // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 var position = new kakao.maps.LatLng(
-	// southWest.lat() + (latSpan * Math.random()),
-	// southWest.lng() + (lngSpan * Math.random())
+	
 	i.lat,i.lng
 );
  var overlay = new kakao.maps.CustomOverlay({
@@ -955,39 +933,22 @@ var position = new kakao.maps.LatLng(
 	beforeOverlay = [];
     overlay.setMap(map);
 	beforeOverlay.push(overlay);
-	
-	// setTimeout(function() {
-	document.getElementById(i.addr).appendChild(close)
-	document.getElementById("wrap").parentNode.style.zIndex = "900"
+	setTimeout(() => {
+		
+		document.getElementById(i.addr).appendChild(close)
+	}, 400);
 	dragEventSWitch = true;
-// }, 400);
+
 	})
-// 	if(count==1){
-// 		panTo(result.stores[mostClose].lat,result.stores[mostClose].lng);
-// 		if(beforeOverlay[0]){
-// 			beforeOverlay[0].setMap(null);
-// 		}
-// 		beforeOverlay = [];
-// 		overlay.setMap(map);
-// 		beforeOverlay.push(overlay);
-// 		// setTimeout(function() {
-// 	document.getElementById(i.addr).appendChild(close)
-// 	document.getElementById("wrap").parentNode.style.zIndex = "900"
-// 	dragEventSWitch = true;
-// // }, 400);
-// 	}	
+
 	count++;
 
 	
 	divCount++;
 	counter++;
 	breakCount++;
-	console.log(divCount)
-	console.log(counter)
 	if(result.stores.length<7 && breakCount==result.stores.length) return true;
 	if(breakCount==7) {
-		console.log(breakCount)
-		console.log(result.stores.length)
 		
 		return true;
 	}
@@ -999,8 +960,6 @@ var position = new kakao.maps.LatLng(
 	$(".scrollDiv").on("scroll", function() {
 	var scrollHeight = $(".storeList").height();
 	var scrollPosition = $(".scrollDiv").height() + $(".scrollDiv").scrollTop();		
-	console.log(scrollPosition)
-		console.log(scrollHeight)
 	if(scrollPosition > scrollHeight - 50&& divCount!=result.stores.length){ 
 		scrollContent();
 		// exe 
@@ -1008,111 +967,8 @@ var position = new kakao.maps.LatLng(
 });
 
 
-// 	result.stores.forEach(i=>{
-// 		if(excepted==true && i.remain_stat!="100개 이상" && i.remain_stat!="30개 이상 100개 미만" && i.remain_stat!="2개 이상 30개 미만"){
-// 			mostClose++;
-// 				return true;
-// 			}
-// 		if(!i.lat) {
-// 			mostClose++;
-// 			return true;
-// 		}
-// 		emptyCount = true;
-// 		if(i.type==999)i.type = "입고 대기"
-// 	if(i.type!="입고 대기"){
-// 		var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
-// 		var today = new Date();
-// 		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
-// 		if(betweenDay>=1){
-// 			i.type = Math.round(betweenDay)+"일 전"
-// 		}else{
-// 			betweenDay = betweenDay*24;
-// 			if(betweenDay>=1 && betweenDay <24){
-// 				i.type = Math.round(betweenDay)+"시간 전"
-// 			}else{
-// 				betweenDay = betweenDay*60;
-// 				i.type = Math.round(betweenDay)+"분 전"
-// 			}
-// 		}
-// }
-		
-	
-// 	var contentList = '<li class="storeLi"><div><a class="storename'+count+'">'+i.lat+"/"+i.lng+'</a></div><div><strong>'+i.name+'</storong></div><div><span>'+i.type+'</span></div><div><span>'+i.code+'</span></div><div><span>'+i.remain_stat+'</span></div></li>'
-// 		$(".storeList").append(contentList)
-// 	var count2 = 0;
-	
-// 	var content = '<div id="wrap" class="wrap">' + 
-//             '    <div class="info">' + 
-//             '        <div id="'+i.addr+'" class="title">' + 
-//             i.name + 
-//             '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-//             '        </div>' + 
-//             '        <div class="body">' + 
-//             '            <div class="img">' +
-//             '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-//             '           </div>' + 
-//             '            <div class="desc">' + 
-//             '                <div class="ellipsis">'+i.addr+'</div>' + 
-// 			'                <div class="jibun ellipsis">'+'재고 : '+i.remain_stat+'</div>' + 
-//             '                <div class="jibun ellipsis">'+'입고 시간 : '+i.type+'</div>' + 
-// 			'                <div class="jibun ellipsis">'+'거리 : '+i.code+'</div>' + 
-//             '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">길찾기</a></div>' + 
-//             '            </div>' + 
-//             '        </div>' + 
-//             '    </div>' +    
-//             '</div>';
-			
-// // 마커 위에 커스텀오버레이를 표시합니다
-// // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-// var position = new kakao.maps.LatLng(
-// 	// southWest.lat() + (latSpan * Math.random()),
-// 	// southWest.lng() + (lngSpan * Math.random())
-// 	i.lat,i.lng
-// );
-//  var overlay = new kakao.maps.CustomOverlay({
-//     content: content,
-//     position: position       
-// });
 
-// 	var close = document.createElement('div')
-// 			close.className = "close"
-// 			close.onclick = closeOverlay
-
-// 	$(".storename"+count).click(function(){
-// 		dragEventSWitch = false;
-// 		if(dragEventSWitch==false) panTo(i.lat,i.lng);
-// 	if(beforeOverlay[0]){
-// 	beforeOverlay[0].setMap(null);
-// 	}
-// 	beforeOverlay = [];
-//     overlay.setMap(map);
-// 	beforeOverlay.push(overlay);
-	
-// 	// setTimeout(function() {
-// 	document.getElementById(i.addr).appendChild(close)
-// 	document.getElementById("wrap").parentNode.style.zIndex = "900"
-// 	dragEventSWitch = true;
-// // }, 400);
-// 	})
-// // 	if(count==1){
-// // 		panTo(result.stores[mostClose].lat,result.stores[mostClose].lng);
-// // 		if(beforeOverlay[0]){
-// // 			beforeOverlay[0].setMap(null);
-// // 		}
-// // 		beforeOverlay = [];
-// // 		overlay.setMap(map);
-// // 		beforeOverlay.push(overlay);
-// // 		// setTimeout(function() {
-// // 	document.getElementById(i.addr).appendChild(close)
-// // 	document.getElementById("wrap").parentNode.style.zIndex = "900"
-// // 	dragEventSWitch = true;
-// // // }, 400);
-// // 	}	
-// 	count++;
-
-// 	})
 	if(emptyCount==false){
-		console.log("123")
 		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
 		$(".storeList").append(noStores)
 		return

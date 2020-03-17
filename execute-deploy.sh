@@ -8,4 +8,4 @@ cd /home/ubuntu/travis/maskMap
 sudo docker build -t maskmap .
 
 
-sudo docker run -d --name maskmap maskmap
+sudo docker run -d --name maskmap -p 80:80 maskmap
