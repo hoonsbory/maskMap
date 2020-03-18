@@ -20,32 +20,87 @@
 </head>
 
 <body style="height : 100%">
+<!-- Modal -->
+
+<div class="modal fade" id="myModal" role="dialog"> <!-- 사용자 지정 부분① : id명 -->
+
+    <div class="modal-dialog">
+
+    
+
+      <!-- Modal content-->
+
+      <div class="modal-content">
+
+        <div class="modal-header">
+
+          <button type="button" class="close" data-dismiss="modal">×</button>
+
+          <h4 class="modal-title">마스크팜 ver 1</h4> <!-- 사용자 지정 부분② : 타이틀 -->
+
+        </div>
+
+        <div class="modal-body">
+
+          <p>여기에 필요한 텍스트 메시지 넣기</p> <!-- 사용자 지정 부분③ : 텍스트 메시지 -->
+
+        </div>
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
 	<div id="map" style="width:100%;height:100%;"></div>
-<input type="text" id="address" value="" />
+	<div id="searchBar">
+<input placeholder="목적지를 입력하세요" type="text" id="address" value="" />
+<img id="searchIcon" src="/static/img/searchIcon.png" />
+</div>
 <img class="loading" src="/static/img/loading25.gif" style="display : none" />	
 <div id="topBar">
-	<span id="date">
-		
+	<span id="date" class="topBarDate">
+
 	</span>
-	<span id="mainTitle">
-		마스크팜
-	</span>
-	<div id="notice">
-		<span>공지자리</span>
+	<div id="buyDate" class="topBarDate">
+		<span id="firstSpan">끝자리 <span id="frontBirth"></span> , <span id="behindBirth"></span>년생 구매</span>
 	</div>
+	<span id="mainTitle">
+		마스크<span style="color : #C0D725">팜</span>
+	</span>
+	<button id="notice" type="button" data-toggle="modal" data-target="#myModal"><img width="20px" src="/static/img/noticeIcon.png" /></button>
+
+	
 </div>
-<button id="excepted">품절 제외 : OFF</button>
-<button id="centerChange">현 위치에서 검색</button>
-<button id="reverseSlideContentUp">up</button>
-<div id="myPosition"><img id="myPositionImg" src="/static/img/loading25.gif" /></div> 
+<p id="excepted2" class="btn-switch">					
+	<input type="radio" id="yes" name="switch" class="btn-switch__radio btn-switch__radio_yes" />
+	<input type="radio" checked id="no" name="switch" class="btn-switch__radio btn-switch__radio_no" />		
+	<label for="yes" id="exceptedOn" class="btn-switch__label btn-switch__label_yes"><span class="btn-switch__txt">품절제외</span></label>
+	<label for="no" id="exceptedOff" class="btn-switch__label btn-switch__label_no"><span class="btn-switch__txt">품절포함</span></label>							
+  </p>
+<!-- <button id="excepted">품절 제외 : OFF</button> -->
+<div id="centerChange">
+	<img width="15px" src="/static/img/searchIcon.png"/>
+현 위치에서 검색
+</div>
+<div class="remainInfo"><img width="100px" src="/static/img/remain-stat.png"/></div>
+<button id="reverseSlideContentUp">목록 열기</button>
+<div id="myPosition"><img id="myPositionImg" width="30px" src="/static/img/myPosition.png" /></div> 
 <!-- <button style="display : none" id="reverseSlideContentUp">Reverse Slide Up</button> -->
 <div class="slide slideUp">
 	<div id="firstBar">
 	<ul id="BarUl">
-		<a id="recentStock" style="width : 22%">입고순</a>
-		<a id="nearby" style="width : 22%">거리순</a>
+		<a id="recentStock" style="width : 49%">입고순</a>
+		<a id="nearby" style="width : 49%">거리순</a>
 	</ul>	
-	<a id="reSearch" style="width : 44%;"></a>
 	
 	
 	

@@ -4,7 +4,7 @@
 		var excepted = false;
 		var result;
 		var result2;
-		var result3;
+		var myPositionBtn = false;
 		var dragEventSWitch = true;
 		var bottomListSwitch = false;
 		var myPositionMarker =[];
@@ -25,30 +25,44 @@ var day = new Date;
 var today = day.getDay();
 if(today==0){
 	$("#date").text("일요일")
+	$("#firstSpan").text("주말은 ")
+	var allPeople = '<span id="weekendBuy">모든 국민 </span><span>구매 가능</span>'
+		
+	$("#firstSpan").after(allPeople)
 
 }
 if(today==1){
 	$("#date").text("월요일")
-	
+	$("#frontBirth").text("1")	
+	$("#behindBirth").text("6")	
 }
 if(today==2){
 	$("#date").text("화요일")
-	
+	$("#frontBirth").text("2")	
+	$("#behindBirth").text("7")	
 }
 if(today==3){
 	$("#date").text("수요일")
+	$("#frontBirth").text("3")	
+	$("#behindBirth").text("8")	
 	
 }
 if(today==4){
 	$("#date").text("목요일")
-	
+	$("#frontBirth").text("4")	
+	$("#behindBirth").text("9")	
 }
 if(today==5){
 	$("#date").text("금요일")
-	
+	$("#frontBirth").text("0")	
+	$("#behindBirth").text("5")	
 }
 if(today==6){
 	$("#date").text("토요일")
+	$("#firstSpan").text("주말은 ")
+	var allPeople = '<span id="weekendBuy">모든 국민 </span><span>구매 가능</span>'
+		
+		$("#firstSpan").after(allPeople)
 	
 }
 
@@ -200,18 +214,7 @@ overlayList = [];
 			}
 			if(!i.lat) return true;
 			emptyCount = true;
-	var position = new kakao.maps.LatLng(
-
-	i.lat,i.lng
-);
 	
-
-var marker = new kakao.maps.Marker({
-	map: map,
-	position: position
-	
-});
-
 
 // if(!i.stock_at || JSON.stringify(i.stock_at)=="null"){
 // i.type = "입고 대기"
@@ -256,31 +259,51 @@ i.created_at = JSON.stringify(i.created_at)=="null" ? "입고 대기" : i.create
 	}
 	}
 
-
+var markerColor;
 var jsonRemain = JSON.stringify(i.remain_stat)
 switch (jsonRemain) {
-	case '"plenty"': i.remain_stat = "100개 이상"
+	case '"plenty"': i.remain_stat = "충분" ,markerColor = "green.png"
 		
 		break;
-	case '"some"': i.remain_stat = "30개 이상 100개 미만"
+	case '"some"': i.remain_stat = "보통" , markerColor = "yellow.png"
 		
 		break;
-	case '"few"': i.remain_stat = "2개 이상 30개 미만"
+	case '"few"': i.remain_stat = "부족" , markerColor = "red.png"
 		
 		break;
-	case '"empty"': i.remain_stat = "품절"
+	case '"empty"': i.remain_stat = "없음" , markerColor = "gray.png"
 		
 		break;
-	case '"break"': i.remain_stat = "품절"
+	case '"break"': i.remain_stat = "없음" , markerColor = "gray.png"
 		
 		break;
-	case "null": i.remain_stat = "입고 대기"
+	case "null": i.remain_stat = "없음"  , markerColor = "gray.png"
 		
 		break;
 	default:
 		break;
 }
-if(!i.remain_stat) i.remain_stat = "입고 대기"
+if(!i.remain_stat) i.remain_stat = "없음"
+
+
+var imageSrc = '/static/img/'+markerColor, // 마커이미지의 주소입니다    
+    imageSize = new kakao.maps.Size(28, 36), // 마커이미지의 크기입니다
+    imageOption = {offset: new kakao.maps.Point(15, 42)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      
+// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+    markerPosition = new kakao.maps.LatLng(i.lat, i.lng); // 마커가 표시될 위치입니다	
+
+var marker = new kakao.maps.Marker({
+	map: map,
+	position: markerPosition,
+	image: markerImage
+	
+});
+
+
+
+
 var content = '<div id="wrap" class="wrap">' + 
             '    <div class="info">' + 
             '        <div id="'+i.name+'" class="title">' + 
@@ -395,7 +418,7 @@ $(".scrollDiv").remove();
 				return false;
 			}
 			
-			if(excepted==true && i.remain_stat!="100개 이상" && i.remain_stat!="30개 이상 100개 미만" && i.remain_stat!="2개 이상 30개 미만"){
+			if(excepted==true && i.remain_stat!="충분" && i.remain_stat!="부족" && i.remain_stat!="보통"){
 				mostClose++;
 				counter++;
 				divCount++
@@ -416,8 +439,32 @@ $(".scrollDiv").remove();
 		i.code = i.code+"m"
 	}
 	}
+	var statColor;
+
+	switch (i.remain_stat) {
+		case "충분": statColor = "#009473"
+			
+			break;
+		case "보통": statColor = "#F0C05A"
+			
+			break;
+		case "부족": statColor = "#DD4124"
+			
+			break;
+		case "없음": statColor = "#84898C"
+			
+			break;
 	
-	var contentList = '<li class="storeLi"><div><a class="storename'+count+'">'+i.lat+"/"+i.lng+'</a></div><div><strong>'+i.name+'</storong></div><div><span>'+i.type+'</span></div><div><span>'+i.code+'</span></div><div><span>'+i.remain_stat+'</span></div></li>'
+		default:
+			break;
+	}
+
+	var contentList = '<li class="storeLi"><div class="storename'+count+'">'+
+	 '<div class="storeName">'+i.name+'</div>' +
+	 '<div class="distanceMe">'+i.code+'</div>' +
+	 '<div class="remainStat"><div style="background : '+statColor+';" class="realStat">'+i.remain_stat+'</div></div>' +
+	 '<div class="stockTime">'+i.type+'</div></div></li>'
+
 		$(".storeList").append(contentList)
 	var count2 = 0;
 	
@@ -555,7 +602,7 @@ function recentStock(){
 				return false;
 			}
 			
-			if(excepted==true && i.remain_stat!="100개 이상" && i.remain_stat!="30개 이상 100개 미만" && i.remain_stat!="2개 이상 30개 미만"){
+			if(excepted==true && i.remain_stat!="충분" && i.remain_stat!="부족" && i.remain_stat!="보통"){
 				mostClose++;
 				counter++;
 				divCount++
@@ -587,7 +634,33 @@ function recentStock(){
 }
 		
 	
-	var contentList = '<li class="storeLi"><div><a class="storename'+count+'">'+i.lat+"/"+i.lng+'</a></div><div><strong>'+i.name+'</storong></div><div><span>'+i.type+'</span></div><div><span>'+i.code+'</span></div><div><span>'+i.remain_stat+'</span></div></li>'
+var statColor;
+
+	switch (i.remain_stat) {
+		case "충분": statColor = "#009473"
+			
+			break;
+		case "보통": statColor = "#F0C05A"
+			
+			break;
+		case "부족": statColor = "#DD4124"
+			
+			break;
+		
+		case "없음": statColor = "#84898C"
+			
+			break;
+	
+		default:
+			break;
+	}
+
+
+var contentList = '<li class="storeLi"><div class="storename'+count+'">'+
+ '<div class="storeName">'+i.name+'</div>' +
+ '<div class="distanceMe">'+i.code+'</div>' +
+ '<div class="remainStat"><div style="background : '+statColor+';" class="realStat">'+i.remain_stat+'</div></div>' +
+ '<div class="stockTime">'+i.type+'</div></div></li>'
 		$(".storeList").append(contentList)
 	var count2 = 0;
 	
@@ -691,21 +764,46 @@ $("#reSearch").click(function(){
 	nearby();
 	}
 })
-$("#myPositionImg").click(function(){
+$("#myPosition").click(function(){
+	if(myPositionBtn==false){
 	myPosition();
-})
-$("#excepted").click(function(){
-	if(excepted==true){
-		excepted = false;
-		$("#excepted").html("품절 제외 : OFF")
-		if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
-		sendAddress();
+	$("#myPositionImg").attr("src","/static/img/myPositionClicked.png")
+		$("#myPosition").css("background","#0f4c81")
+	myPositionBtn = true
 	}else{
-		excepted = true;
-		$("#excepted").html("품절 제외 : ON")
-		if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
-		sendAddress();
+		$("#myPositionImg").attr("src","/static/img/myPosition.png")
+		$("#myPosition").css("background","white")
+		if(myPositionMarker[0]) {
+			myPositionMarker[0].setMap(null)
+		}
+		if(myPositionMarker[1]) {
+			myPositionMarker[1].setMap(null)
+		}
+		myPositionBtn = false;
+		myPositionMarker = [];
 	}
+})
+// $("#excepted").click(function(){
+// 	console.log(excepted)
+// 	if(excepted==true){
+// 		excepted = false;
+// 		if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
+// 		sendAddress();
+// 	}else{
+// 		excepted = true;
+// 		if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
+// 		sendAddress();
+// 	}
+// })
+$("#exceptedOn").click(function(){
+	excepted = true
+	if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
+		sendAddress();
+})
+$("#exceptedOff").click(function(){
+	excepted = false
+	if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
+		sendAddress();
 })
 $('#slideContentDown').on('click', function()
 	{
@@ -718,31 +816,28 @@ $('#slideContentDown').on('click', function()
 	
 	$('#reverseSlideContentUp').on('click', function()
 	{
-		if($('#reverseSlideContentUp').text()=="up"){
+		if($('#reverseSlideContentUp').text()=="목록 열기"){
 		if(document.getElementsByClassName("storeList")[0].childElementCount==0){
 			recentStock();
 		}	
 		$('.slideUp').slideDown();
-		$('#myPosition').animate({bottom:"48%"}, 400);
-		$('#reverseSlideContentUp').animate({bottom:"48%"}, 400);
-		$('#reverseSlideContentUp').html("down")
+		$('#myPosition').animate({bottom:"50%"}, 400);
+		$('#reverseSlideContentUp').animate({bottom:"50%"}, 400);
+		$('#reverseSlideContentUp').html("목록 닫기")
 		}else{
 		$('.slideUp').slideUp();
-		$('#myPosition').animate({bottom:"0%"}, 400);
-		$('#reverseSlideContentUp').animate({bottom:"0%"}, 400);
-		$('#reverseSlideContentUp').html("up")
+		$('#myPosition').animate({bottom:"15px"}, 400);
+		$('#reverseSlideContentUp').animate({bottom:"15px"}, 400);
+		$('#reverseSlideContentUp').html("목록 열기")
 		}
 	});
 function myPosition(){
-if (navigator.geolocation) {
-						if(myPositionMarker[0]) {
-							myPositionMarker[0].setMap(null)
-						}
-						myPositionMarker = [];
+	if (navigator.geolocation) {
+
+						
 			            navigator.geolocation.getCurrentPosition (function(pos) {
 							centerLat = pos.coords.latitude
 							centerLng = pos.coords.longitude
-							var center = new kakao.maps.LatLng(centerLat,centerLng)
 							map.setCenter(new kakao.maps.LatLng(centerLat,centerLng))
 							var position = new kakao.maps.LatLng(
 									centerLat,centerLng
@@ -752,6 +847,7 @@ if (navigator.geolocation) {
 								position: position
 							});
 							myPositionMarker.push(marker);
+							console.log(11)
 							sendAddress();
 						})
 }else{
@@ -769,6 +865,8 @@ $("#centerChange").click(function(){
 kakao.maps.event.addListener(map, 'tilesloaded', function() {
 	// if(dragEventSWitch==true){
 		$("#centerChange").css("display","block");
+		
+
 		
 	// }
 }); 

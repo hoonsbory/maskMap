@@ -9,4 +9,4 @@ spring:
 
 
 server: 
-    port: 443
+    port: 80
