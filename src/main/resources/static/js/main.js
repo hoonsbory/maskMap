@@ -331,16 +331,16 @@ kakao.maps.event.addListener(marker, 'click', function() {
 beforeMarker.push(marker);
 overlayList.push(overlay);
 count++;
+});
+
+result2 = JSON.parse(JSON.stringify(result))
+
+if(menuSwitch=="stock"){
+    document.getElementById("recentStock").click();
+}else{
+    document.getElementById("nearby").click();
+}
 $(".loading").css("display","none")
-			});
-			
-		result2 = JSON.parse(JSON.stringify(result))
-			
-			if(menuSwitch=="stock"){
-				document.getElementById("recentStock").click();
-	}else{
-		document.getElementById("nearby").click();
-	}
 
 }
 
