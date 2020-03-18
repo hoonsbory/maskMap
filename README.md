@@ -7,7 +7,11 @@
 -Stack
 
   framework : Spring Boot
+  
   Docker-load balancing(4 jdk containers) with Nginx(reverse proxy)
+  
   CI : travis CI 
+  
   storage : AWS S3
+  
   deploy : AWS CodeDeploy
