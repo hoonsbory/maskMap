@@ -288,9 +288,6 @@ var content = '<div id="wrap" class="wrap">' +
             '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
             '        </div>' + 
             '        <div class="body">' + 
-            '            <div class="img">' +
-            '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-            '           </div>' + 
             '            <div class="desc">' + 
             '                <div class="ellipsis">'+i.addr+'</div>' + 
 			'                <div class="jibun ellipsis">'+'재고 : '+i.remain_stat+'</div>' + 
@@ -430,9 +427,6 @@ $(".scrollDiv").remove();
             i.name + 
             '        </div>' + 
             '        <div class="body">' + 
-            '            <div class="img">' +
-            '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-            '           </div>' + 
             '            <div class="desc">' + 
             '                <div class="ellipsis">'+i.addr+'</div>' + 
 			'                <div class="jibun ellipsis">'+'재고 : '+i.remain_stat+'</div>' + 
@@ -603,9 +597,6 @@ function recentStock(){
             i.name + 
             '        </div>' + 
             '        <div class="body">' + 
-            '            <div class="img">' +
-            '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-            '           </div>' + 
             '            <div class="desc">' + 
             '                <div class="ellipsis">'+i.addr+'</div>' + 
 			'                <div class="jibun ellipsis">'+'재고 : '+i.remain_stat+'</div>' + 
