@@ -8,9 +8,9 @@ spring:
     
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://15.165.216.51:3306/countuser?allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=UTF-8
-        username: SCOTT
-        password: TIGER
+        url: jdbc:mysql://52.78.29.3:3306/dayoff?allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=UTF-8
+        username: aws
+        password: aws
 logging.file: /var/log/requestloggingweb.log
 
 server: 
