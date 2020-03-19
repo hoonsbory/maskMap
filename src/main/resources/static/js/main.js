@@ -68,7 +68,7 @@ if(today==6){
 }
 
 var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-map.setMaxLevel(5);
+map.setMaxLevel(8);
 
 function panTo(lat,lng) {
     // 이동할 위도 경도 위치를 생성합니다 
@@ -176,7 +176,7 @@ function sendAddress(){
 		
 		if(result.count==0){
 			$(".loading").css("display","none")
-			var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+			var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
 		$(".storeList").append(noStores)
 		return
 
@@ -393,7 +393,7 @@ $(".loading").css("display","none")
 	}
 	 $(".storeLi").remove();
 	 if(!result2.stores[0]){
-		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
 		 $(".storeList").append(noStores)
 		 return
 		}
@@ -570,7 +570,7 @@ $(".loading").css("display","none")
 	} 
 });
 if(emptyCount==false){
-		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+	var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
 		$(".storeList").append(noStores)
 		return
 	}
@@ -592,7 +592,8 @@ function recentStock(){
 	var mostClose = 0;	
 	var divCount = 0;
 	if(!result.stores[0]){
-		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
+
 		$(".storeList").append(noStores)
 		return
 	}
@@ -774,7 +775,7 @@ $(".loading").css("display","none")
 
 
 	if(emptyCount==false){
-		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
 		$(".storeList").append(noStores)
 		return
 	}
