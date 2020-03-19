@@ -63,11 +63,6 @@ public class HomeController {
 
         return "index";
     }
-    @RequestMapping(value = "/robots.txt")
-    @ResponseBody
-    public String robots() {
-        return "User-agent: *\nAllow: /md\n";
-    }
    
     @RequestMapping(value = "/address" , method = RequestMethod.POST)
 	@ResponseBody

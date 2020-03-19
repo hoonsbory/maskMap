@@ -1,9 +1,9 @@
 spring:
   
     mvc:
-        static-path-pattern: /static/**
+        static-path-pattern: /**
     resources:
-        static-locations: classpath:/static/
+        static-locations: classpath:/
         add-mappings: true
     
     datasource:
