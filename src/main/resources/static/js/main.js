@@ -162,7 +162,26 @@ function deg2rad(deg) {
 		 return (dist);
 	 }
 	 
- 
+function dateCal(i){
+	if(i!="입고 대기"){
+		var nowDate = new Date(i.substr(0,4), (i.substr(4,2)-1), i.substr(6,2), i.substr(8,2), i.substr(10,2))
+		var today = new Date();
+		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
+		if(betweenDay>=1){
+			return Math.round(betweenDay)+"일 전 입고"
+		}else{
+			betweenDay = betweenDay*24;
+			if(betweenDay>=1 && betweenDay <24){
+				return Math.round(betweenDay)+"시간 전 입고"
+			}else{
+				betweenDay = betweenDay*60;
+				return Math.round(betweenDay)+"분 전 입고"
+			}
+		}
+}else{
+	return i
+}
+} 
 function sendAddress(){
 	$(".storeLi").remove();
 	$("#centerChange").css("display","none");
@@ -193,12 +212,36 @@ function sendAddress(){
 	
 beforeMarker = [];
 overlayList = [];
-		result.stores.forEach(i=>{
+	// 	result.stores.forEach(i=>{
+	// 		if(!i.stock_at || JSON.stringify(i.stock_at)=="null"){
+	// 			i.type = 999;
+	// 			var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
+	// 			i.code = distanceResult;
+	// 		}else{
+	// 			var test2 = i.stock_at.substr(0,4)
+	// 				test2 += i.stock_at.substr(5,2)
+	// 				test2 += i.stock_at.substr(8,2)
+	// 				test2 += i.stock_at.substr(11,2)
+	// 				test2 += i.stock_at.substr(14,2)
+	// 				i.type = test2
+	// 			var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
+	// 			i.code = distanceResult;
+	// }
+
+	
+
+	// 	})
+
+
+		var emptyCount = false;
+		var count = 1;
+		result.stores.forEach(i => {
 			if(!i.stock_at || JSON.stringify(i.stock_at)=="null"){
 				i.type = 999;
 				var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
 				i.code = distanceResult;
 			}else{
+				//나중에 입고순으로 정렬을 해야하기 때문에 원본데이터인 stock_at는 냅두고 type에 데이터를 넣는다.
 				var test2 = i.stock_at.substr(0,4)
 					test2 += i.stock_at.substr(5,2)
 					test2 += i.stock_at.substr(8,2)
@@ -208,21 +251,15 @@ overlayList = [];
 				var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
 				i.code = distanceResult;
 	}
+			if(i.type==999)i.type = "입고 대기"
 
-	
-
-		})
-
-
-		var emptyCount = false;
-		var count = 1;
-		result.stores.forEach(i => {
 			if(excepted==true && i.remain_stat!="plenty" && i.remain_stat!="some" && i.remain_stat!="few"){
 				return true;
 			}
 			if(!i.lat) return true;
 			emptyCount = true;
 	
+
 
 // if(!i.stock_at || JSON.stringify(i.stock_at)=="null"){
 // i.type = "입고 대기"
@@ -233,23 +270,24 @@ overlayList = [];
 // 		test2 += i.stock_at.substr(11,2)
 // 		test2 += i.stock_at.substr(14,2)
 // 		i.type = test2
-if(i.type==999)i.type = "입고 대기"
-if(i.type!="입고 대기"){
-var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
-		var today = new Date();
-		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
-		if(betweenDay>=1){
-			i.type = Math.round(betweenDay)+"일 전 입고"
-		}else{
-			betweenDay = betweenDay*24;
-			if(betweenDay>=1 && betweenDay <24){
-				i.type = Math.round(betweenDay)+"시간 전 입고"
-			}else{
-				betweenDay = betweenDay*60;
-				i.type = Math.round(betweenDay)+"분 전 입고"
-			}
-		}
-}
+ i.type = dateCal(i.type)
+
+// if(i.type!="입고 대기"){
+// var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
+// 		var today = new Date();
+// 		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
+// 		if(betweenDay>=1){
+// 			i.type = Math.round(betweenDay)+"일 전 입고"
+// 		}else{
+// 			betweenDay = betweenDay*24;
+// 			if(betweenDay>=1 && betweenDay <24){
+// 				i.type = Math.round(betweenDay)+"시간 전 입고"
+// 			}else{
+// 				betweenDay = betweenDay*60;
+// 				i.type = Math.round(betweenDay)+"분 전 입고"
+// 			}
+// 		}
+// }
 i.created_at = JSON.stringify(i.created_at)=="null" ? "입고 대기" : i.created_at;
 
 	
@@ -651,22 +689,23 @@ function recentStock(){
 			}
 			emptyCount = true;
 		if(i.type==999)i.type = "입고 대기"
-	if(i.type!="입고 대기"){
-		var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
-		var today = new Date();
-		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
-		if(betweenDay>=1){
-			i.type = Math.round(betweenDay)+"일 전 입고"
-		}else{
-			betweenDay = betweenDay*24;
-			if(betweenDay>=1 && betweenDay <24){
-				i.type = Math.round(betweenDay)+"시간 전 입고"
-			}else{
-				betweenDay = betweenDay*60;
-				i.type = Math.round(betweenDay)+"분 전 입고"
-			}
-		}
-}
+		i.type = dateCal(i.type)
+// 	if(i.type!="입고 대기"){
+// 		var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
+// 		var today = new Date();
+// 		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
+// 		if(betweenDay>=1){
+// 			i.type = Math.round(betweenDay)+"일 전 입고"
+// 		}else{
+// 			betweenDay = betweenDay*24;
+// 			if(betweenDay>=1 && betweenDay <24){
+// 				i.type = Math.round(betweenDay)+"시간 전 입고"
+// 			}else{
+// 				betweenDay = betweenDay*60;
+// 				i.type = Math.round(betweenDay)+"분 전 입고"
+// 			}
+// 		}
+// }
 		
 	
 var statColor;
@@ -865,11 +904,13 @@ $('#slideContentDown').on('click', function()
 		}	
 		$('.slideUp').slideDown();
 		$('#reverseSlideContentUp').html("목록 닫기")
-		if(window.innerWidth<799){
+		if(window.innerWidth<1040){
 		$('#myPosition').animate({bottom:"42%"}, 400);
 		$('.remainInfo').animate({bottom:"42%"}, 400);
+		$('#reverseSlideContentUp').animate({bottom:"42%"}, 400);
+	}else{
+		$('#reverseSlideContentUp').animate({bottom:"38%"}, 400);
 	}
-	$('#reverseSlideContentUp').animate({bottom:"42%"}, 400);
 	
 		}else{
 		$('.slideUp').slideUp();
