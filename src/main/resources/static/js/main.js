@@ -787,9 +787,9 @@ $("#reSearch").click(function(){
 $("#myPosition").click(function(){
 	if(myPositionBtn==false){
 		myPositionBtn = true
+		myPosition();
 		$("#myPositionImg").attr("src","/static/img/myPositionClicked.png")
 		$("#myPosition").css("background","#0f4c81")
-	myPosition();
 	}else{
 		$("#myPositionImg").attr("src","/static/img/myPosition.png")
 		$("#myPosition").css("background","white")
@@ -859,7 +859,7 @@ $('#slideContentDown').on('click', function()
 function myPosition(){
 	
 	if (navigator.geolocation) {
-		
+		myPositionBtn = true
 		
 		navigator.geolocation.getCurrentPosition (function(pos) {
 			$(".loading").css("display","block")
