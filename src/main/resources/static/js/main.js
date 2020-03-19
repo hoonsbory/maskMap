@@ -387,9 +387,7 @@ $(".loading").css("display","none")
 		 $(".storeList").append(noStores)
 		 return
 		}
-		navigator.geolocation.getCurrentPosition(function(pos){
-			var centerLat = pos.coords.latitude;
-			var centerLng = pos.coords.longitude;
+		
 			
 			result2.stores.forEach(i=>{
 				var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
@@ -563,7 +561,7 @@ if(emptyCount==false){
 		return
 	}
 
-})
+
 	menuSwitch = "distance";
 	$(".slideUp").scrollTop(0);
 }
