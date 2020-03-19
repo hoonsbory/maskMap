@@ -212,25 +212,6 @@ function sendAddress(){
 	
 beforeMarker = [];
 overlayList = [];
-	// 	result.stores.forEach(i=>{
-	// 		if(!i.stock_at || JSON.stringify(i.stock_at)=="null"){
-	// 			i.type = 999;
-	// 			var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
-	// 			i.code = distanceResult;
-	// 		}else{
-	// 			var test2 = i.stock_at.substr(0,4)
-	// 				test2 += i.stock_at.substr(5,2)
-	// 				test2 += i.stock_at.substr(8,2)
-	// 				test2 += i.stock_at.substr(11,2)
-	// 				test2 += i.stock_at.substr(14,2)
-	// 				i.type = test2
-	// 			var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
-	// 			i.code = distanceResult;
-	// }
-
-	
-
-	// 	})
 
 
 		var emptyCount = false;
@@ -261,39 +242,12 @@ overlayList = [];
 	
 
 
-// if(!i.stock_at || JSON.stringify(i.stock_at)=="null"){
-// i.type = "입고 대기"
-// }else{
-// var test2 = i.stock_at.substr(0,4)
-// 		test2 += i.stock_at.substr(5,2)
-// 		test2 += i.stock_at.substr(8,2)
-// 		test2 += i.stock_at.substr(11,2)
-// 		test2 += i.stock_at.substr(14,2)
-// 		i.type = test2
  i.type = dateCal(i.type)
 
-// if(i.type!="입고 대기"){
-// var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
-// 		var today = new Date();
-// 		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
-// 		if(betweenDay>=1){
-// 			i.type = Math.round(betweenDay)+"일 전 입고"
-// 		}else{
-// 			betweenDay = betweenDay*24;
-// 			if(betweenDay>=1 && betweenDay <24){
-// 				i.type = Math.round(betweenDay)+"시간 전 입고"
-// 			}else{
-// 				betweenDay = betweenDay*60;
-// 				i.type = Math.round(betweenDay)+"분 전 입고"
-// 			}
-// 		}
-// }
 i.created_at = JSON.stringify(i.created_at)=="null" ? "입고 대기" : i.created_at;
 
 	
 
-	// var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
-	// i.code = distanceResult;
 
 
 	if(positionDeny==false){
@@ -397,7 +351,6 @@ kakao.maps.event.addListener(marker, 'click', function() {
 
 });
 
-// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 beforeMarker.push(marker);
 overlayList.push(overlay);
 count++;
@@ -547,11 +500,7 @@ $("#recentStock").css("border-bottom","none")
             '    </div>' +    
             '</div>';
 			
-// 마커 위에 커스텀오버레이를 표시합니다
-// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 var position = new kakao.maps.LatLng(
-	// southWest.lat() + (latSpan * Math.random()),
-	// southWest.lng() + (lngSpan * Math.random())
 	i.lat,i.lng
 );
  var overlay = new kakao.maps.CustomOverlay({
@@ -572,10 +521,6 @@ var position = new kakao.maps.LatLng(
 				beforeOverlay = [];
 				await overlay.setMap(map);
 				beforeOverlay.push(overlay);
-				// if(!document.getElementById(i.addr)){
-					// 	console.log(document.getElementById(i.addr))
-					// 	doubleClick(i.addr)
-					// }
 					setTimeout(() => {
 						document.getElementById(i.addr).appendChild(close)
 						document.getElementById("wrap").parentNode.style.zIndex = "900"
@@ -608,7 +553,6 @@ $(".loading").css("display","none")
 	console.log(scrollPosition)
 	if(scrollPosition > scrollHeight - 50 && divCount!=result2.stores.length){ 
 		scrollContent();
-		// exe 
 	} 
 });
 if(emptyCount==false){
@@ -690,22 +634,6 @@ function recentStock(){
 			emptyCount = true;
 		if(i.type==999)i.type = "입고 대기"
 		i.type = dateCal(i.type)
-// 	if(i.type!="입고 대기"){
-// 		var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr(6,2), i.type.substr(8,2), i.type.substr(10,2))
-// 		var today = new Date();
-// 		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
-// 		if(betweenDay>=1){
-// 			i.type = Math.round(betweenDay)+"일 전 입고"
-// 		}else{
-// 			betweenDay = betweenDay*24;
-// 			if(betweenDay>=1 && betweenDay <24){
-// 				i.type = Math.round(betweenDay)+"시간 전 입고"
-// 			}else{
-// 				betweenDay = betweenDay*60;
-// 				i.type = Math.round(betweenDay)+"분 전 입고"
-// 			}
-// 		}
-// }
 		
 	
 var statColor;
@@ -811,7 +739,6 @@ $(".loading").css("display","none")
 	var scrollPosition = $(".scrollDiv").height() + $(".scrollDiv").scrollTop();		
 	if(scrollPosition > scrollHeight - 50&& divCount!=result.stores.length){ 
 		scrollContent();
-		// exe 
 	} 
 });
 
@@ -862,18 +789,7 @@ $("#myPosition").click(function(){
 		myPositionMarker = [];
 	}
 })
-// $("#excepted").click(function(){
-// 	console.log(excepted)
-// 	if(excepted==true){
-// 		excepted = false;
-// 		if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
-// 		sendAddress();
-// 	}else{
-// 		excepted = true;
-// 		if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
-// 		sendAddress();
-// 	}
-// })
+
 $("#searchIcon").click(function(){
 	addressSearch($("#address").val())
 })
@@ -949,10 +865,6 @@ function myPosition(){
 							positionDeny = true;
 							sendAddress();
 						})
-// }else{
-// 	alert("위치정보를 확인할 수 없어 기본 설정된 위치로 이동합니다.")
-// 	sendAddress();
-// }
 }
 
 myPosition();
@@ -970,12 +882,10 @@ $("#centerChange").click(function(){
 })
 
 kakao.maps.event.addListener(map, 'tilesloaded', function() {
-	// if(dragEventSWitch==true){
 		$("#centerChange").css("display","block");
 		
 
 		
-	// }
 }); 
 	});
 	
