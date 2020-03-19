@@ -239,14 +239,14 @@ var nowDate = new Date(i.type.substr(0,4), (i.type.substr(4,2)-1), i.type.substr
 		var today = new Date();
 		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
 		if(betweenDay>=1){
-			i.type = Math.round(betweenDay)+"일 전"
+			i.type = Math.round(betweenDay)+"일 전 입고"
 		}else{
 			betweenDay = betweenDay*24;
 			if(betweenDay>=1 && betweenDay <24){
-				i.type = Math.round(betweenDay)+"시간 전"
+				i.type = Math.round(betweenDay)+"시간 전 입고"
 			}else{
 				betweenDay = betweenDay*60;
-				i.type = Math.round(betweenDay)+"분 전"
+				i.type = Math.round(betweenDay)+"분 전 입고"
 			}
 		}
 }
@@ -326,7 +326,7 @@ var content = '<div id="wrap" class="wrap">' +
             '            <div class="desc">' + 
             '                <div id="overlayAddress" class="ellipsis">'+i.addr+'</div>' + 
 			'                <div id="overlayDistance" class="jibun ellipsis">'+i.code+'</div>' + 
-            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+" 입고"+'</div>' + 
+            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+'</div>' + 
 			'                <div id="overlayStat" style="background : '+statColor+'" class="jibun ellipsis">'+i.remain_stat+'</div>' + 
             '                <div><a href="https://map.kakao.com/link/to/'+i.name+","+i.lat+","+i.lng+'" target="_blank" class="link">길찾기</a></div>' + 
             '            </div>' + 
@@ -487,7 +487,7 @@ $("#recentStock").css("border-bottom","none")
 	 '<div class="storeName">'+i.name+'</div>' +
 	 '<div class="distanceMe">'+i.code+'</div>' +
 	 '<div class="remainStat"><div style="background : '+statColor+';" class="realStat">'+i.remain_stat+'</div></div>' +
-	 '<div class="stockTime">'+i.type+" 입고"+'</div></div></li>'
+	 '<div class="stockTime">'+i.type+'</div></div></li>'
 
 		$(".storeList").append(contentList)
 	var count2 = 0;
@@ -501,7 +501,7 @@ $("#recentStock").css("border-bottom","none")
             '            <div class="desc">' + 
             '                <div id="overlayAddress" class="ellipsis">'+i.addr+'</div>' + 
 			'                <div id="overlayDistance" class="jibun ellipsis">'+i.code+'</div>' + 
-            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+" 입고"+'</div>' + 
+            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+'</div>' + 
 			'                <div id="overlayStat" style="background : '+statColor+'" class="jibun ellipsis">'+i.remain_stat+'</div>' + 
             '                <div><a href="https://map.kakao.com/link/to/'+i.name+","+i.lat+","+i.lng+'" target="_blank" class="link">길찾기</a></div>' + 
             '            </div>' + 
@@ -656,14 +656,14 @@ function recentStock(){
 		var today = new Date();
 		var betweenDay = (today.getTime() - nowDate.getTime())/1000/60/60/24;
 		if(betweenDay>=1){
-			i.type = Math.round(betweenDay)+"일 전"
+			i.type = Math.round(betweenDay)+"일 전 입고"
 		}else{
 			betweenDay = betweenDay*24;
 			if(betweenDay>=1 && betweenDay <24){
-				i.type = Math.round(betweenDay)+"시간 전"
+				i.type = Math.round(betweenDay)+"시간 전 입고"
 			}else{
 				betweenDay = betweenDay*60;
-				i.type = Math.round(betweenDay)+"분 전"
+				i.type = Math.round(betweenDay)+"분 전 입고"
 			}
 		}
 }
@@ -695,7 +695,7 @@ var contentList = '<li class="storeLi"><div class="storename'+count+'">'+
  '<div class="storeName">'+i.name+'</div>' +
  '<div class="distanceMe">'+i.code+'</div>' +
  '<div class="remainStat"><div style="background : '+statColor+';" class="realStat">'+i.remain_stat+'</div></div>' +
- '<div class="stockTime">'+i.type+" 입고"+'</div></div></li>'
+ '<div class="stockTime">'+i.type+'</div></div></li>'
 		$(".storeList").append(contentList)
 	var count2 = 0;
 	
@@ -708,7 +708,7 @@ var contentList = '<li class="storeLi"><div class="storename'+count+'">'+
             '            <div class="desc">' + 
             '                <div id="overlayAddress" class="ellipsis">'+i.addr+'</div>' + 
 			'                <div id="overlayDistance" class="jibun ellipsis">'+i.code+'</div>' + 
-            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+" 입고"+'</div>' + 
+            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+'</div>' + 
 			'                <div id="overlayStat" style="background : '+statColor+'" class="jibun ellipsis">'+i.remain_stat+'</div>' + 
             '                <div><a href="https://map.kakao.com/link/to/'+i.name+","+i.lat+","+i.lng+'" target="_blank" class="link">길찾기</a></div>' + 
             '            </div>' + 
