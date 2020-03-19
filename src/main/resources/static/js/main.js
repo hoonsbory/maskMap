@@ -787,6 +787,9 @@ $("#reSearch").click(function(){
 $("#myPosition").click(function(){
 	if(myPositionBtn==false){
 		myPositionBtn = true
+		if(myPositionMarker[0]) {
+			myPositionMarker[0].setMap(null)
+		}
 		myPosition();
 		$("#myPositionImg").attr("src","/static/img/myPositionClicked.png")
 		$("#myPosition").css("background","#0f4c81")
@@ -858,8 +861,7 @@ $('#slideContentDown').on('click', function()
 	});
 function myPosition(){
 	
-	if (navigator.geolocation) {
-		myPositionBtn = true
+	// if (navigator.geolocation) {
 		
 		navigator.geolocation.getCurrentPosition (function(pos) {
 			$(".loading").css("display","block")
@@ -885,13 +887,20 @@ function myPosition(){
 						}, function(error){
 							sendAddress();
 						})
+// }else{
+// 	alert("위치정보를 확인할 수 없어 기본 설정된 위치로 이동합니다.")
+// 	sendAddress();
+// }
+}
+
+myPosition();
+
+if (navigator.geolocation) {
+
 }else{
 	alert("위치정보를 확인할 수 없어 기본 설정된 위치로 이동합니다.")
 	sendAddress();
 }
-}
-
-myPosition();
 
 $("#centerChange").click(function(){
 	sendAddress();
