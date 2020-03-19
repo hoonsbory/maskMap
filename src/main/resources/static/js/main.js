@@ -82,11 +82,17 @@ function closeOverlay() {
     beforeOverlay[0].setMap(null);     
 }
 
+document.getElementById("notice").click();
+
+
 
 // 주소로 좌표를 검색합니다
 function addressSearch(address){
 var ps = new kakao.maps.services.Places(); 
-
+if (!address.replace(/^\s+|\s+$/g, '')) {
+	alert('키워드를 입력해주세요!');
+	return false;
+	}
 // 키워드로 장소를 검색합니다
 ps.keywordSearch(address, placesSearchCB); 
 
@@ -114,10 +120,7 @@ $("#address").keyup(function(){
 	if (window.event.keyCode == 13) {
 	var keyword = document.getElementById('address').value;
 
-	if (!keyword.replace(/^\s+|\s+$/g, '')) {
-	alert('키워드를 입력해주세요!');
-	return false;
-	}
+	
  	// 엔터키가 눌렸을 때 실행할 내용
  	addressSearch($("#address").val());
 }
@@ -261,31 +264,31 @@ i.created_at = JSON.stringify(i.created_at)=="null" ? "입고 대기" : i.create
 
 var markerColor;
 var jsonRemain = JSON.stringify(i.remain_stat)
+var statColor;
 switch (jsonRemain) {
-	case '"plenty"': i.remain_stat = "충분" ,markerColor = "green.png"
+	case '"plenty"': i.remain_stat = "충분" ,markerColor = "green.png", statColor = "#009473"
 		
 		break;
-	case '"some"': i.remain_stat = "보통" , markerColor = "yellow.png"
+	case '"some"': i.remain_stat = "보통" , markerColor = "yellow.png", statColor = "#F0C05A"
 		
 		break;
-	case '"few"': i.remain_stat = "부족" , markerColor = "red.png"
+	case '"few"': i.remain_stat = "부족" , markerColor = "red.png", statColor = "#DD4124"
 		
 		break;
-	case '"empty"': i.remain_stat = "없음" , markerColor = "gray.png"
+	case '"empty"': i.remain_stat = "없음" , markerColor = "gray.png" , statColor = "#84898C"
 		
 		break;
-	case '"break"': i.remain_stat = "없음" , markerColor = "gray.png"
+	case '"break"': i.remain_stat = "없음" , markerColor = "gray.png", statColor = "#84898C"
 		
 		break;
-	case "null": i.remain_stat = "없음"  , markerColor = "gray.png"
+	case "null": i.remain_stat = "없음"  , markerColor = "gray.png" , statColor = "#84898C"
 		
 		break;
+		
 	default:
 		break;
 }
 if(!i.remain_stat) i.remain_stat = "없음"
-
-
 var imageSrc = '/static/img/'+markerColor, // 마커이미지의 주소입니다    
     imageSize = new kakao.maps.Size(28, 36), // 마커이미지의 크기입니다
     imageOption = {offset: new kakao.maps.Point(15, 42)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -312,10 +315,10 @@ var content = '<div id="wrap" class="wrap">' +
             '        </div>' + 
             '        <div class="body">' + 
             '            <div class="desc">' + 
-            '                <div class="ellipsis">'+i.addr+'</div>' + 
-			'                <div class="jibun ellipsis">'+'재고 : '+i.remain_stat+'</div>' + 
-            '                <div class="jibun ellipsis">'+'입고 시간 : '+i.type+'</div>' + 
-			'                <div class="jibun ellipsis">'+'거리 : '+i.code+'</div>' + 
+            '                <div id="overlayAddress" class="ellipsis">'+i.addr+'</div>' + 
+			'                <div id="overlayDistance" class="jibun ellipsis">'+i.code+'</div>' + 
+            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+" 입고"+'</div>' + 
+			'                <div id="overlayStat" style="background : '+statColor+'" class="jibun ellipsis">'+i.remain_stat+'</div>' + 
             '                <div><a href="https://map.kakao.com/link/to/'+i.name+","+i.lat+","+i.lng+'" target="_blank" class="link">길찾기</a></div>' + 
             '            </div>' + 
             '        </div>' + 
@@ -378,21 +381,20 @@ $(".loading").css("display","none")
 
 
  function nearby() {
-	 
-	$(".storeLi").remove();
-	if(!result2.stores[0]){
-		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
-		$(".storeList").append(noStores)
-		return
-	}
- navigator.geolocation.getCurrentPosition(function(pos){
-	var centerLat = pos.coords.latitude;
-	var centerLng = pos.coords.longitude;
-
-result2.stores.forEach(i=>{
-	var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
-	i.code = distanceResult;
-
+	 $(".storeLi").remove();
+	 if(!result2.stores[0]){
+		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
+		 $(".storeList").append(noStores)
+		 return
+		}
+		navigator.geolocation.getCurrentPosition(function(pos){
+			var centerLat = pos.coords.latitude;
+			var centerLng = pos.coords.longitude;
+			
+			result2.stores.forEach(i=>{
+				var distanceResult = Math.round(distance(centerLat,centerLng,i.lat,i.lng))
+				i.code = distanceResult;
+				
 })
 
 result2.stores.sort(function(a,b){
@@ -400,14 +402,20 @@ result2.stores.sort(function(a,b){
 })
 
 $(".scrollDiv").remove();
-	var scrollDiv = '<div class="scrollDiv"><ul class="storeList"></ul></div>'
-	$("#firstBar").after(scrollDiv)
+var scrollDiv = '<div class="scrollDiv"><ul class="storeList"></ul></div>'
+$("#firstBar").after(scrollDiv)
+$("#nearby").css("border-bottom","4px solid #C0D725")
+$("#nearby").css("color","#C0D725")
+$("#recentStock").css("color","#F1EEE6")
+$("#recentStock").css("border-bottom","none")
 	var count = 1;
 	var emptyCount = false;
 	var mostClose = 0;	
 	var divCount = 0;
 	
 	function scrollContent(){
+	$(".loading").css("display","block")
+
 		var counter = 0;
 		var breakCount = 0;
 		
@@ -463,7 +471,7 @@ $(".scrollDiv").remove();
 	 '<div class="storeName">'+i.name+'</div>' +
 	 '<div class="distanceMe">'+i.code+'</div>' +
 	 '<div class="remainStat"><div style="background : '+statColor+';" class="realStat">'+i.remain_stat+'</div></div>' +
-	 '<div class="stockTime">'+i.type+'</div></div></li>'
+	 '<div class="stockTime">'+i.type+" 입고"+'</div></div></li>'
 
 		$(".storeList").append(contentList)
 	var count2 = 0;
@@ -475,11 +483,11 @@ $(".scrollDiv").remove();
             '        </div>' + 
             '        <div class="body">' + 
             '            <div class="desc">' + 
-            '                <div class="ellipsis">'+i.addr+'</div>' + 
-			'                <div class="jibun ellipsis">'+'재고 : '+i.remain_stat+'</div>' + 
-            '                <div class="jibun ellipsis">'+'입고 시간 : '+i.type+'</div>' + 
-			'                <div class="jibun ellipsis">'+'거리 : '+i.code+'</div>' + 
-            '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">길찾기</a></div>' + 
+            '                <div id="overlayAddress" class="ellipsis">'+i.addr+'</div>' + 
+			'                <div id="overlayDistance" class="jibun ellipsis">'+i.code+'</div>' + 
+            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+" 입고"+'</div>' + 
+			'                <div id="overlayStat" style="background : '+statColor+'" class="jibun ellipsis">'+i.remain_stat+'</div>' + 
+            '                <div><a href="https://map.kakao.com/link/to/'+i.name+","+i.lat+","+i.lng+'" target="_blank" class="link">길찾기</a></div>' + 
             '            </div>' + 
             '        </div>' + 
             '    </div>' +    
@@ -532,15 +540,19 @@ var position = new kakao.maps.LatLng(
 		
 		return true;
 	}
-	})
+	
+})
+$(".loading").css("display","none")
 
 
 	}
 	scrollContent();
 	$(".scrollDiv").on("scroll", function() {
 	var scrollHeight = $(".storeList").height();
-	var scrollPosition = $(".scrollDiv").height() + $(".scrollDiv").scrollTop();		
-	if(scrollPosition > scrollHeight - 50&& divCount!=result2.stores.length){ 
+	var scrollPosition = $(".scrollDiv").height() + $(".scrollDiv").scrollTop();	
+	console.log(scrollHeight)	
+	console.log(scrollPosition)
+	if(scrollPosition > scrollHeight - 50 && divCount!=result2.stores.length){ 
 		scrollContent();
 		// exe 
 	} 
@@ -559,6 +571,10 @@ function recentStock(){
 	$(".scrollDiv").remove();
 	var scrollDiv = '<div class="scrollDiv"><ul class="storeList"></ul></div>'
 	$("#firstBar").after(scrollDiv)
+	$("#recentStock").css("border-bottom","4px solid #C0D725")
+	 $("#recentStock").css("color","#C0D725")
+	 $("#nearby").css("color","#F1EEE6")
+	 $("#nearby").css("border-bottom","none")
 	var count = 1;
 	var emptyCount = false;
 	var mostClose = 0;	
@@ -592,6 +608,8 @@ function recentStock(){
 	
 	
 	function scrollContent(){
+	$(".loading").css("display","block")
+
 		var counter = 0;
 		var breakCount = 0;
 		
@@ -660,7 +678,7 @@ var contentList = '<li class="storeLi"><div class="storename'+count+'">'+
  '<div class="storeName">'+i.name+'</div>' +
  '<div class="distanceMe">'+i.code+'</div>' +
  '<div class="remainStat"><div style="background : '+statColor+';" class="realStat">'+i.remain_stat+'</div></div>' +
- '<div class="stockTime">'+i.type+'</div></div></li>'
+ '<div class="stockTime">'+i.type+" 입고"+'</div></div></li>'
 		$(".storeList").append(contentList)
 	var count2 = 0;
 	
@@ -671,11 +689,11 @@ var contentList = '<li class="storeLi"><div class="storename'+count+'">'+
             '        </div>' + 
             '        <div class="body">' + 
             '            <div class="desc">' + 
-            '                <div class="ellipsis">'+i.addr+'</div>' + 
-			'                <div class="jibun ellipsis">'+'재고 : '+i.remain_stat+'</div>' + 
-            '                <div class="jibun ellipsis">'+'입고 시간 : '+i.type+'</div>' + 
-			'                <div class="jibun ellipsis">'+'거리 : '+i.code+'</div>' + 
-            '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">길찾기</a></div>' + 
+            '                <div id="overlayAddress" class="ellipsis">'+i.addr+'</div>' + 
+			'                <div id="overlayDistance" class="jibun ellipsis">'+i.code+'</div>' + 
+            '                <div id="overlayStock" class="jibun ellipsis">'+i.type+" 입고"+'</div>' + 
+			'                <div id="overlayStat" style="background : '+statColor+'" class="jibun ellipsis">'+i.remain_stat+'</div>' + 
+            '                <div><a href="https://map.kakao.com/link/to/'+i.name+","+i.lat+","+i.lng+'" target="_blank" class="link">길찾기</a></div>' + 
             '            </div>' + 
             '        </div>' + 
             '    </div>' +    
@@ -725,7 +743,9 @@ var position = new kakao.maps.LatLng(
 		
 		return true;
 	}
-	})
+	
+})
+$(".loading").css("display","none")
 
 
 	}
@@ -766,10 +786,10 @@ $("#reSearch").click(function(){
 })
 $("#myPosition").click(function(){
 	if(myPositionBtn==false){
-	myPosition();
-	$("#myPositionImg").attr("src","/static/img/myPositionClicked.png")
+		myPositionBtn = true
+		$("#myPositionImg").attr("src","/static/img/myPositionClicked.png")
 		$("#myPosition").css("background","#0f4c81")
-	myPositionBtn = true
+	myPosition();
 	}else{
 		$("#myPositionImg").attr("src","/static/img/myPosition.png")
 		$("#myPosition").css("background","white")
@@ -795,6 +815,9 @@ $("#myPosition").click(function(){
 // 		sendAddress();
 // 	}
 // })
+$("#searchIcon").click(function(){
+	addressSearch($("#address").val())
+})
 $("#exceptedOn").click(function(){
 	excepted = true
 	if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
@@ -821,21 +844,25 @@ $('#slideContentDown').on('click', function()
 			recentStock();
 		}	
 		$('.slideUp').slideDown();
-		$('#myPosition').animate({bottom:"50%"}, 400);
-		$('#reverseSlideContentUp').animate({bottom:"50%"}, 400);
+		$('#myPosition').animate({bottom:"42%"}, 400);
+		$('#reverseSlideContentUp').animate({bottom:"42%"}, 400);
+		$('.remainInfo').animate({bottom:"42%"}, 400);
 		$('#reverseSlideContentUp').html("목록 닫기")
 		}else{
 		$('.slideUp').slideUp();
-		$('#myPosition').animate({bottom:"15px"}, 400);
-		$('#reverseSlideContentUp').animate({bottom:"15px"}, 400);
+		$('#myPosition').animate({bottom:"18px"}, 400);
+		$('#reverseSlideContentUp').animate({bottom:"18px"}, 400);
+		$('.remainInfo').animate({bottom:"18px"}, 400);
 		$('#reverseSlideContentUp').html("목록 열기")
 		}
 	});
 function myPosition(){
+	
 	if (navigator.geolocation) {
-
-						
-			            navigator.geolocation.getCurrentPosition (function(pos) {
+		
+		
+		navigator.geolocation.getCurrentPosition (function(pos) {
+			$(".loading").css("display","block")
 							centerLat = pos.coords.latitude
 							centerLng = pos.coords.longitude
 							map.setCenter(new kakao.maps.LatLng(centerLat,centerLng))
@@ -848,6 +875,8 @@ function myPosition(){
 							});
 							myPositionMarker.push(marker);
 							console.log(11)
+							sendAddress();
+						}, function(error){
 							sendAddress();
 						})
 }else{
