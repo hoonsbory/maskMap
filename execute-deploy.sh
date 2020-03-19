@@ -5,7 +5,7 @@ sudo docker cp /home/ubuntu/travis/maskMap/target/maskmap-0.0.1-SNAPSHOT.jar ser
 
 sudo docker start server1
 
-sleep 5
+# sleep 5
 
 # sudo docker stop server2
 # sudo docker cp /home/ubuntu/travis/maskMap/target/maskmap-0.0.1-SNAPSHOT.jar server2:/
