@@ -547,8 +547,8 @@ var position = new kakao.maps.LatLng(
 	divCount++;
 	counter++;
 	breakCount++;
-	if(result2.stores.length<7 && breakCount==result2.stores.length) return true;
-	if(breakCount==7) {
+	if(result2.stores.length<11 && breakCount==result2.stores.length) return true;
+	if(breakCount==11) {
 		
 		return true;
 	}
@@ -750,8 +750,8 @@ var position = new kakao.maps.LatLng(
 	divCount++;
 	counter++;
 	breakCount++;
-	if(result.stores.length<7 && breakCount==result.stores.length) return true;
-	if(breakCount==7) {
+	if(result.stores.length<11 && breakCount==result.stores.length) return true;
+	if(breakCount==11) {
 		
 		return true;
 	}
