@@ -366,11 +366,8 @@ result2 = JSON.parse(JSON.stringify(result))
 if(menuSwitch=="stock"){
     document.getElementById("recentStock").click();
 }else{
-	if(positionDeny==true){
-		alert("위치 제공을 차단하셨거나 지원하지 않습니다.")
-	}else{
+	
 	document.getElementById("nearby").click();
-	}
 }
 $(".loading").css("display","none")
 
@@ -390,6 +387,10 @@ $(".loading").css("display","none")
 
 
  function nearby() {
+	if(positionDeny==true){
+		alert("위치 제공을 차단하셨거나 지원하지 않습니다.")
+		return
+	}
 	 $(".storeLi").remove();
 	 if(!result2.stores[0]){
 		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%;">근처에 약국없다 가라...</div>'
@@ -873,14 +874,14 @@ $('#slideContentDown').on('click', function()
 function myPosition(){
 	
 	// if (navigator.geolocation) {
-		
 		$(".loading").css("display","block")
 		navigator.geolocation.getCurrentPosition (function(pos) {
+			positionDeny = false;
 				centerLat = pos.coords.latitude
 				centerLng = pos.coords.longitude
 				map.setCenter(new kakao.maps.LatLng(centerLat,centerLng))
 				var imageSrc = '/static/img/myPoint.png', // 마커이미지의 주소입니다    
-    			imageSize = new kakao.maps.Size(22, 22), // 마커이미지의 크기입니다
+    			imageSize = new kakao.maps.Size(16, 16), // 마커이미지의 크기입니다
    				imageOption = {offset: new kakao.maps.Point(15, 42)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
       
 				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),

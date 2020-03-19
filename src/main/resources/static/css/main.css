@@ -543,8 +543,8 @@ height: 51px;
 .modal-bodyDiv{
     padding-top: 10px;
     border-bottom: 1px solid #e5e5e5;
-    font-size: 10px;
-    font-weight: 100;
+    font-size: 12px;
+    font-weight: 400;
 }
 .modal-dialog{
     top: 10%;
@@ -555,8 +555,8 @@ height: 51px;
     padding-top: 0;
 }
 .footerInfo{
-    font-size: 8px;
-    font-weight: 100;
+    font-size: 10px;
+    font-weight: 400;
     color : black;
 }
 .footerInfo p{
