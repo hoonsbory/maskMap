@@ -99,8 +99,12 @@ ps.keywordSearch(address, placesSearchCB);
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
 function placesSearchCB (data, status, pagination) {
-    if (status === kakao.maps.services.Status.OK) {
-
+	if(status=="ZERO_RESULT"){
+		alert("찾으시는 장소가 없습니다")
+		return
+	}
+	if (status === kakao.maps.services.Status.OK) {
+		
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         var bounds = new kakao.maps.LatLngBounds();
