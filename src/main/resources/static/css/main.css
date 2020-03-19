@@ -286,7 +286,7 @@ height: 100%;
 overflow-y: scroll;
 background: #F1EEE6;
 }
-@media(min-width: 769px){
+@media(min-width: 800px){
 .slideUp
 {
 z-index: 998;

@@ -859,10 +859,13 @@ $('#slideContentDown').on('click', function()
 			recentStock();
 		}	
 		$('.slideUp').slideDown();
-		$('#myPosition').animate({bottom:"42%"}, 400);
-		$('#reverseSlideContentUp').animate({bottom:"42%"}, 400);
-		$('.remainInfo').animate({bottom:"42%"}, 400);
 		$('#reverseSlideContentUp').html("목록 닫기")
+		if(window.innerWidth<799){
+		$('#myPosition').animate({bottom:"42%"}, 400);
+		$('.remainInfo').animate({bottom:"42%"}, 400);
+	}
+	$('#reverseSlideContentUp').animate({bottom:"42%"}, 400);
+	
 		}else{
 		$('.slideUp').slideUp();
 		$('#myPosition').animate({bottom:"18px"}, 400);
