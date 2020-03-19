@@ -533,6 +533,7 @@ height: 51px;
     overflow-y: auto;
     max-height : 300px;
     padding-top: 0;
+    padding-bottom: 0;
 }
 .body-title{
     font-size: 14px !important;
@@ -552,11 +553,11 @@ height: 51px;
 .modal-footer{
     border-top: none;
     text-align: center;
-    padding-top: 0;
+    padding-top: 16px;
 }
 .footerInfo{
     font-size: 10px;
-    font-weight: 400;
+    font-weight: 100;
     color : black;
 }
 .footerInfo p{
