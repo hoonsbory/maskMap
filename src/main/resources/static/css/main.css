@@ -573,6 +573,8 @@ height: 51px;
 .modal-header{
     color : white;
     background: #0f4c81;
+    padding : 6px;
+    padding-top : 1px;
 }
 .btn-default{
     color: white;
