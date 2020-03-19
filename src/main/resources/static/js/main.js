@@ -4,6 +4,7 @@
 		var excepted = false;
 		var result;
 		var result2;
+		var positionDeny = false;
 		var myPositionBtn = false;
 		var dragEventSWitch = true;
 		var bottomListSwitch = false;
@@ -253,13 +254,17 @@ i.created_at = JSON.stringify(i.created_at)=="null" ? "입고 대기" : i.create
 	// i.code = distanceResult;
 
 
-	if(i.code!=0){
+	if(positionDeny==false){
+		if(i.code!=0){
 	if(i.code>=1000){
 		i.code = i.code/1000
 		i.code = i.code.toFixed(1)+"km"
 	}else{
 		i.code = i.code+"m"
 	}
+	}
+	}else{
+		i.code = 0
 	}
 
 var markerColor;
@@ -361,7 +366,11 @@ result2 = JSON.parse(JSON.stringify(result))
 if(menuSwitch=="stock"){
     document.getElementById("recentStock").click();
 }else{
-    document.getElementById("nearby").click();
+	if(positionDeny==true){
+		alert("위치 제공을 차단하셨거나 지원하지 않습니다.")
+	}else{
+	document.getElementById("nearby").click();
+	}
 }
 $(".loading").css("display","none")
 
@@ -437,6 +446,7 @@ $("#recentStock").css("border-bottom","none")
 				return false;
 			}
 			emptyCount = true;
+	if(positionDeny==false){
 		if(i.code!=0){
 	if(i.code>=1000){
 		i.code = i.code/1000
@@ -444,6 +454,9 @@ $("#recentStock").css("border-bottom","none")
 	}else{
 		i.code = i.code+"m"
 	}
+	}
+	}else{
+		i.code = 0
 	}
 	var statColor;
 
@@ -861,8 +874,8 @@ function myPosition(){
 	
 	// if (navigator.geolocation) {
 		
+		$(".loading").css("display","block")
 		navigator.geolocation.getCurrentPosition (function(pos) {
-			$(".loading").css("display","block")
 				centerLat = pos.coords.latitude
 				centerLng = pos.coords.longitude
 				map.setCenter(new kakao.maps.LatLng(centerLat,centerLng))
@@ -883,6 +896,7 @@ function myPosition(){
 							console.log(11)
 							sendAddress();
 						}, function(error){
+							positionDeny = true;
 							sendAddress();
 						})
 // }else{
@@ -897,6 +911,7 @@ if (navigator.geolocation) {
 
 }else{
 	alert("위치정보를 확인할 수 없어 기본 설정된 위치로 이동합니다.")
+	positionDeny = true;
 	sendAddress();
 }
 
