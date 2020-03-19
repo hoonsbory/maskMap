@@ -1,43 +1,23 @@
 package com.jaehoon.maskmap;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.session.StoreBase;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 
 
@@ -48,12 +28,38 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 public class HomeController {
 
-  
-
+    @Autowired
+    CountUserRepository countUserRepository;
 
     @RequestMapping(value = "/")
-    public String home() {
+    public String home(HttpServletRequest request) {
+                HttpSession session = request.getSession();
+        
+                if(session.getAttribute("count")=="count"){   
+                CountUser countUser = new CountUser();
 
+                String ip = request.getHeader("X-Forwarded-For");
+                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+                    ip = request.getHeader("Proxy-Client-IP"); 
+                } 
+                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+                    ip = request.getHeader("WL-Proxy-Client-IP"); 
+                } 
+                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+                    ip = request.getHeader("HTTP_CLIENT_IP"); 
+                } 
+                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+                    ip = request.getHeader("HTTP_X_FORWARDED_FOR"); 
+                } 
+                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
+                    ip = request.getRemoteAddr(); 
+                }
+                
+                countUser.setUserIP(ip);
+                countUserRepository.save(countUser);
+
+                session.setAttribute("count", "nocount");
+            }
 
         return "index";
     }
