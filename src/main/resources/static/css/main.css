@@ -708,4 +708,20 @@ position: absolute;
     top: 77px;
 }
 }
+@media(max-width : 336px){
+    .distanceMe {
+        font-size: 12px;
+        position: relative;
+        float: left;
+        width: 15%;
+        top: 5px;
+    }
+    .storeName {
+        float: left;
+        width: 37%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
 
