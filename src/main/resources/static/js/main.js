@@ -1,5 +1,3 @@
-
-
 $(function () {
 	var excepted = false;
 	var result;
@@ -87,8 +85,6 @@ $(function () {
 
 	document.getElementById("notice").click();
 
-
-
 	// 주소로 좌표를 검색합니다
 	function addressSearch(address) {
 		var ps = new kakao.maps.services.Places();
@@ -134,12 +130,12 @@ $(function () {
 	})
 
 
-	// This function converts decimal degrees to radians
+	// 십진수를 라디안으로 변환
 	function deg2rad(deg) {
 		return (deg * Math.PI / 180.0);
 	}
 
-	// This function converts radians to decimal degrees
+	// 라디안을 십진수로 변환
 	function rad2deg(rad) {
 		return (rad * 180 / Math.PI);
 	}
@@ -156,8 +152,6 @@ $(function () {
 		dist = Math.acos(dist);
 		dist = rad2deg(dist);
 		dist = dist * 60 * 1.1515;
-
-
 
 		dist = dist * 1609.344;
 
@@ -250,7 +244,6 @@ $(function () {
 					beforeMarker = [];
 					overlayList = [];
 
-
 					result.stores.forEach(i => {
 						if (!i.stock_at || JSON.stringify(i.stock_at) == "null") {
 							i.type = "입고 대기";
@@ -277,9 +270,6 @@ $(function () {
 						i.type = dateCal(i.type)
 
 						i.created_at = JSON.stringify(i.created_at) == "null" ? "입고 대기" : i.created_at;
-
-
-
 
 						//거리 데이터를 km, m로 변환
 						if (positionDeny == false) {
@@ -390,7 +380,6 @@ $(function () {
 		})
 	}
 
-
 	//입고 순 정렬
 	function recentStock() {
 		//스크롤 div 재생성
@@ -420,9 +409,6 @@ $(function () {
 				test2 += i.stock_at.substr(11, 2)
 				test2 += i.stock_at.substr(14, 2)
 				i.type = test2
-
-
-
 			}
 		})
 
@@ -460,7 +446,6 @@ $(function () {
 				if (i.type == 999) i.type = "입고 대기" //맨 밑으로 온 null값을 입고대기로 변경
 				i.type = dateCal(i.type)
 
-
 				var statColor;
 				//재고 div 색 정해주기
 				switch (i.remain_stat) {
@@ -482,13 +467,11 @@ $(function () {
 						break;
 				}
 
-
 				var contentList = contentListFnc(i, statColor, count)
 
 				$(".storeList").append(contentList)
 
 				var content = contentListFnc2(i, statColor)
-
 
 				// 마커 위에 커스텀오버레이를 표시합니다
 				// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
@@ -524,8 +507,6 @@ $(function () {
 				})
 
 				count++;
-
-
 				divCount++;
 				counter++;
 				breakCount++;
@@ -537,8 +518,6 @@ $(function () {
 
 			})
 			$(".loading").css("display", "none")
-
-
 		}
 		scrollContent();
 		$(".scrollDiv").on("scroll", function () {
@@ -549,14 +528,9 @@ $(function () {
 			}
 		});
 
-
-
-
 		menuSwitch = "stock";
 		$(".slideUp").scrollTop(0);
 	}
-
-
 
 	//거리순 정렬
 	function nearby() {
@@ -714,7 +688,7 @@ $(function () {
 		menuSwitch = "distance";
 		$(".slideUp").scrollTop(0);
 	}
-	
+
 
 	$('#recentStock').click(function () {
 		recentStock();
@@ -722,7 +696,7 @@ $(function () {
 	$('#nearby').click(function () {
 		nearby();
 	})
-	
+
 	$("#myPosition").click(function () {
 		if (myPositionBtn == false) {
 			myPositionBtn = true
@@ -790,13 +764,17 @@ $(function () {
 		}
 	});
 	function myPosition() {
-		if(navigator.geolocation){
-		var geoOptions = {
-			maximumAge: 1 * 40 * 1000,
-		  }
-		// if (navigator.geolocation) {
-		$(".loading").css("display", "block")
-		navigator.geolocation.getCurrentPosition(callback, error,geoOptions)
+		if (navigator.geolocation) {
+			var geoOptions = {
+				maximumAge: 1 * 40 * 1000,
+			}
+			// if (navigator.geolocation) {
+			$(".loading").css("display", "block")
+			navigator.geolocation.getCurrentPosition(callback, error, geoOptions)
+		} else {
+			alert("위치정보를 확인할 수 없어 기본 설정된 위치로 이동합니다.")
+			positionDeny = true;
+			sendAddress();
 		}
 	}
 
@@ -828,22 +806,12 @@ $(function () {
 	}
 	myPosition();
 
-	if (navigator.geolocation) {
-
-	} else {
-		alert("위치정보를 확인할 수 없어 기본 설정된 위치로 이동합니다.")
-		positionDeny = true;
-		sendAddress();
-	}
-
 	$("#centerChange").click(function () {
 		sendAddress();
 	})
 
 	kakao.maps.event.addListener(map, 'tilesloaded', function () {
 		$("#centerChange").css("display", "block");
-
-
 
 	});
 });
