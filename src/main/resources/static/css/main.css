@@ -120,10 +120,10 @@
 .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
 .info .title {
     padding: 5px 0 0 10px;
-    height: 30px;
+    height: 28px;
     background: #eee;
     border-bottom: 1px solid #ddd;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
     background: #A5B8D0;
@@ -170,7 +170,7 @@
     border-radius: 5px;
     /* display: block; */
     position: absolute;
-    bottom: 8px;
+    bottom: 4px;
     left: 50%;
     width: 204px;
     margin-left: -102px;
@@ -194,7 +194,7 @@ body
 {
 background:white;
 font-family: 'NYJ Gothic' !important;
-font-size: 150%;
+font-size: 120%;
 }
 #buyDate{
     position: absolute;
@@ -380,7 +380,7 @@ background: #F1EEE6;
         margin-left: -66px;
         border-radius: 16px;
         outline: 0;
-        font-size: 13px;
+        font-size: 11px;
         padding: 3px;
         width: 132px;
         display: none;
@@ -436,10 +436,11 @@ background: #F1EEE6;
     }
     .storeName{
         float: left;
-        width: 40%;
+        width: 35%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        margin-top: 5px;
         
     }
     .distanceMe{
@@ -453,7 +454,7 @@ background: #F1EEE6;
         position: relative;
         float: left;
         width: 16%;
-        top : -2px;
+        top : 4px;
     }
     .stockTime{
         position: relative;
@@ -699,7 +700,7 @@ position: absolute;
     margin-left: -66px;
     border-radius: 16px;
     outline: 0;
-    font-size: 11px;
+    font-size: 10px;
     padding: 3px;
     width: 132px;
     display: none;
@@ -717,11 +718,11 @@ position: absolute;
         top: 5px;
     }
     .storeName {
-        float: left;
-        width: 37%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+    float: left;
+    width: 37%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 }
 
