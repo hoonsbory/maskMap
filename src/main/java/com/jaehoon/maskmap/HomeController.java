@@ -1,6 +1,7 @@
 package com.jaehoon.maskmap;
 
 import java.nio.charset.Charset;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,25 +35,25 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String home(HttpServletRequest request) {
                 HttpSession session = request.getSession();
-        
                 if(session.getAttribute("count")=="count"){   
                 CountUser countUser = new CountUser();
 
                 String ip = request.getHeader("X-Forwarded-For");
-                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-                    ip = request.getHeader("Proxy-Client-IP"); 
-                } 
-                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-                    ip = request.getHeader("WL-Proxy-Client-IP"); 
-                } 
-                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-                    ip = request.getHeader("HTTP_CLIENT_IP"); 
-                } 
-                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-                    ip = request.getHeader("HTTP_X_FORWARDED_FOR"); 
-                } 
-                if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) { 
-                    ip = request.getRemoteAddr(); 
+            
+                if (ip == null) {
+                    ip = request.getHeader("Proxy-Client-IP");
+                }
+                if (ip == null) {
+                    ip = request.getHeader("WL-Proxy-Client-IP");
+                }
+                if (ip == null) {
+                    ip = request.getHeader("HTTP_CLIENT_IP");
+                }
+                if (ip == null) {
+                    ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+                }
+                if (ip == null) {
+                    ip = request.getRemoteAddr();
                 }
                 
                 countUser.setUserIP(ip);
