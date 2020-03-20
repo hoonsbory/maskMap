@@ -792,11 +792,14 @@ $(function () {
 		}
 	});
 	function myPosition() {
-
+		if(navigator.geolocation){
+		var geoOptions = {
+			maximumAge: 5 * 60 * 1000,
+		  }
 		// if (navigator.geolocation) {
 		$(".loading").css("display", "block")
-		navigator.geolocation.getCurrentPosition(callback, error)
-
+		navigator.geolocation.getCurrentPosition(callback, error,geoOptions)
+		}
 	}
 
 	function callback(pos) {
@@ -823,6 +826,7 @@ $(function () {
 	function error(error) {
 		positionDeny = true;
 		alert("위치 제공을 차단하셨거나 지원하지 않습니다.")
+		console.log(error)
 		sendAddress();
 	}
 	myPosition();
