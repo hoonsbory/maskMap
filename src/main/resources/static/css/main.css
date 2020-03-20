@@ -120,10 +120,10 @@
 .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
 .info .title {
     padding: 5px 0 0 10px;
-    height: 28px;
+    height: 30px;
     background: #eee;
     border-bottom: 1px solid #ddd;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
     background: #A5B8D0;
@@ -170,7 +170,7 @@
     border-radius: 5px;
     /* display: block; */
     position: absolute;
-    bottom: 4px;
+    bottom: 8px;
     left: 50%;
     width: 204px;
     margin-left: -102px;
@@ -194,7 +194,7 @@ body
 {
 background:white;
 font-family: 'NYJ Gothic' !important;
-font-size: 120%;
+font-size: 150%;
 }
 #buyDate{
     position: absolute;
@@ -380,7 +380,7 @@ background: #F1EEE6;
         margin-left: -66px;
         border-radius: 16px;
         outline: 0;
-        font-size: 11px;
+        font-size: 13px;
         padding: 3px;
         width: 132px;
         display: none;
@@ -429,18 +429,17 @@ background: #F1EEE6;
         background: #C0D725;
         border-radius: 2px;
         padding-left: 2px;
-        padding-right: 2px;
+        margin-right: 2px;
     }
     .slideUp li div{
         display: inline; 
     }
     .storeName{
         float: left;
-        width: 35%;
+        width: 40%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        margin-top: 5px;
         
     }
     .distanceMe{
@@ -454,7 +453,7 @@ background: #F1EEE6;
         position: relative;
         float: left;
         width: 16%;
-        top : 4px;
+        top : -2px;
     }
     .stockTime{
         position: relative;
@@ -700,7 +699,7 @@ position: absolute;
     margin-left: -66px;
     border-radius: 16px;
     outline: 0;
-    font-size: 10px;
+    font-size: 11px;
     padding: 3px;
     width: 132px;
     display: none;
@@ -711,18 +710,11 @@ position: absolute;
 }
 @media(max-width : 336px){
     .distanceMe {
-        font-size: 12px;
-        position: relative;
-        float: left;
-        width: 15%;
-        top: 5px;
-    }
-    .storeName {
+    font-size: 12px;
+    position: relative;
     float: left;
-    width: 37%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    width: 15%;
+    top: 5px;
 }
 }
 
