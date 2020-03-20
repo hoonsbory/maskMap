@@ -183,12 +183,12 @@
     font-weight: 400;
     src: url(/static/font/NYJGothicMedium.ttf) format("truetype");
 }
-/* @font-face {
+@font-face {
     font-family: 'NYJ Gothic';
     font-style: normal;
     font-weight: 100;
     src: url(/static/font/NYJGothicLight.ttf) format("truetype");
-} */
+}
 @import 'https://fonts.googleapis.com/css?family=Lato';
 body
 {
