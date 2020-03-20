@@ -2,10 +2,15 @@ spring:
   
     mvc:
         static-path-pattern: /**
+
+        view:
+            prefix: /WEB-INF/jsp/
+            suffix: .jsp
     resources:
         static-locations: classpath:/
         add-mappings: true
     
+        
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://52.78.29.3:3306/dayoff?allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=UTF-8
@@ -14,5 +19,5 @@ spring:
 logging.file: /var/log/requestloggingweb.log
 
 server: 
-    port: 443 
+    port: 443  
 

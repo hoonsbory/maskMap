@@ -1,5 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en" style="height : 100%">
+<html style="height : 100%">
 <head>
 <meta charset="UTF-8">
 <meta property="og:site_name" content="마스크팜"/> 

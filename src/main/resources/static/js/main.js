@@ -705,8 +705,6 @@ $(function () {
 		$(".scrollDiv").on("scroll", function () {
 			var scrollHeight = $(".storeList").height();
 			var scrollPosition = $(".scrollDiv").height() + $(".scrollDiv").scrollTop();
-			console.log(scrollHeight)
-			console.log(scrollPosition)
 			if (scrollPosition > scrollHeight - 50 && divCount != result2.stores.length) {
 				scrollContent();
 			}
@@ -794,7 +792,7 @@ $(function () {
 	function myPosition() {
 		if(navigator.geolocation){
 		var geoOptions = {
-			maximumAge: 5 * 60 * 1000,
+			maximumAge: 1 * 40 * 1000,
 		  }
 		// if (navigator.geolocation) {
 		$(".loading").css("display", "block")
@@ -826,7 +824,6 @@ $(function () {
 	function error(error) {
 		positionDeny = true;
 		alert("위치 제공을 차단하셨거나 지원하지 않습니다.")
-		console.log(error)
 		sendAddress();
 	}
 	myPosition();
