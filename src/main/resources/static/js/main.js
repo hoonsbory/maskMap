@@ -199,7 +199,8 @@ function sendAddress(){
 		
 		if(result.count==0){
 			$(".loading").css("display","none")
-			var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
+			var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : -77px">근처에 약국이 없습니다</div>'
+			result2.count =0;
 		$(".storeList").append(noStores)
 		return
 
@@ -387,8 +388,15 @@ $(".loading").css("display","none")
 		return
 	}
 	 $(".storeLi").remove();
-	 if(!result2.stores[0]){
-		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
+	 $(".scrollDiv").remove();
+	 var scrollDiv = '<div class="scrollDiv"><ul class="storeList"></ul></div>'
+	 $("#firstBar").after(scrollDiv)
+	 $("#nearby").css("border-bottom","4px solid #C0D725")
+	 $("#nearby").css("color","#C0D725")
+	 $("#recentStock").css("color","#F1EEE6")
+	 $("#recentStock").css("border-bottom","none")
+	 if(result2.count==0){
+		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : -77px">근처에 약국이 없습니다</div>'
 		 $(".storeList").append(noStores)
 		 return
 		}
@@ -404,13 +412,6 @@ result2.stores.sort(function(a,b){
 	return a.code - b.code
 })
 
-$(".scrollDiv").remove();
-var scrollDiv = '<div class="scrollDiv"><ul class="storeList"></ul></div>'
-$("#firstBar").after(scrollDiv)
-$("#nearby").css("border-bottom","4px solid #C0D725")
-$("#nearby").css("color","#C0D725")
-$("#recentStock").css("color","#F1EEE6")
-$("#recentStock").css("border-bottom","none")
 	var count = 1;
 	var emptyCount = false;
 	var mostClose = 0;	
@@ -556,7 +557,7 @@ $(".loading").css("display","none")
 	} 
 });
 if(emptyCount==false){
-	var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
+	var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : -77px">근처에 약국이 없습니다</div>'
 		$(".storeList").append(noStores)
 		return
 	}
@@ -577,8 +578,8 @@ function recentStock(){
 	var emptyCount = false;
 	var mostClose = 0;	
 	var divCount = 0;
-	if(!result.stores[0]){
-		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
+	if(result.count==0){
+		var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : -77px">근처에 약국이 없습니다</div>'
 
 		$(".storeList").append(noStores)
 		return
@@ -745,7 +746,7 @@ $(".loading").css("display","none")
 
 
 	if(emptyCount==false){
-		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : 77px">근처에 약국이 없습니다</div>'
+		 var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : -77px">근처에 약국이 없습니다</div>'
 		$(".storeList").append(noStores)
 		return
 	}
