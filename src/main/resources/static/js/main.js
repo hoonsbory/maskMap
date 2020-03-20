@@ -68,7 +68,7 @@ if(today==6){
 }
 
 var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-map.setMaxLevel(8);
+map.setMaxLevel(6);
 
 function panTo(lat,lng) {
     // 이동할 위도 경도 위치를 생성합니다 
@@ -104,7 +104,7 @@ function placesSearchCB (data, status, pagination) {
 		return
 	}
 	if (status === kakao.maps.services.Status.OK) {
-		
+		$("#address").blur();
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         var bounds = new kakao.maps.LatLngBounds();
