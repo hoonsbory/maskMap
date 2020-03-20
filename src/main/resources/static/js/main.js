@@ -840,33 +840,36 @@ function myPosition(){
 	
 	// if (navigator.geolocation) {
 		$(".loading").css("display","block")
-		navigator.geolocation.getCurrentPosition (function(pos) {
-			positionDeny = false;
-				centerLat = pos.coords.latitude
-				centerLng = pos.coords.longitude
-				map.setCenter(new kakao.maps.LatLng(centerLat,centerLng))
-				var imageSrc = '/static/img/myPoint.png', // 마커이미지의 주소입니다    
-    			imageSize = new kakao.maps.Size(16, 16), // 마커이미지의 크기입니다
-   				imageOption = {offset: new kakao.maps.Point(15, 42)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-      
-				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-    			markerPosition = new kakao.maps.LatLng(centerLat, centerLng); // 마커가 표시될 위치입니다	
-
-				var marker = new kakao.maps.Marker({
-					map: map,
-					position: markerPosition,
-					image: markerImage
+		navigator.geolocation.getCurrentPosition(callback,error)
+		
+	}
 	
-				});
-							myPositionMarker.push(marker);
-							console.log(11)
-							sendAddress();
-						}, function(error){
-							positionDeny = true;
-							sendAddress();
-						})
-}
+	function callback(pos){
+	positionDeny = false;
+	centerLat = pos.coords.latitude
+	centerLng = pos.coords.longitude
+	map.setCenter(new kakao.maps.LatLng(centerLat,centerLng))
+	var imageSrc = '/static/img/myPoint.png', // 마커이미지의 주소입니다    
+	imageSize = new kakao.maps.Size(16, 16), // 마커이미지의 크기입니다
+	   imageOption = {offset: new kakao.maps.Point(15, 42)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
+	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+	markerPosition = new kakao.maps.LatLng(centerLat, centerLng); // 마커가 표시될 위치입니다	
+
+	var marker = new kakao.maps.Marker({
+		map: map,
+		position: markerPosition,
+		image: markerImage
+
+	});
+				myPositionMarker.push(marker);
+				sendAddress();
+}
+function error(error){
+	positionDeny = true;
+	alert("위치 제공을 차단하셨거나 지원하지 않습니다.")
+	sendAddress();
+}
 myPosition();
 
 if (navigator.geolocation) {
