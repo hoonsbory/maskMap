@@ -679,4 +679,33 @@ position: absolute;
     z-index: 998;
 }
 }
+@media(max-height : 545px){
+#address {
+    border-radius: 16px;
+    background: white;
+    border-style: none;
+    border: 1px solid #0f4c81;
+    height: 29px;
+    width: 100%;
+    outline: none;
+    padding-left: 10px;
+}
+#centerChange {
+    border: 1px solid #A5B8D0;
+    position: absolute;
+    left: 50%;
+    text-align: center;
+    z-index: 999;
+    margin-left: -66px;
+    border-radius: 16px;
+    outline: 0;
+    font-size: 11px;
+    padding: 3px;
+    width: 132px;
+    display: none;
+    font-weight: 100;
+    background: white;
+    top: 77px;
+}
+}
 
