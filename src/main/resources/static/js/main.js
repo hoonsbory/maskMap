@@ -766,7 +766,7 @@ $(function () {
 	function myPosition() {
 		if (navigator.geolocation) {
 			var geoOptions = {
-				maximumAge: 1 * 40 * 1000,
+				maximumAge: 0,
 			}
 			// if (navigator.geolocation) {
 			$(".loading").css("display", "block")
