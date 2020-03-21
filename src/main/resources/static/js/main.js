@@ -767,6 +767,7 @@ $(function () {
 		if (navigator.geolocation) {
 			var geoOptions = {
 				maximumAge: 0,
+				enableHighAccuracy : false
 			}
 			// if (navigator.geolocation) {
 			$(".loading").css("display", "block")
