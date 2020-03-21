@@ -230,6 +230,7 @@ background: whitesmoke;
 display: none;
 width: 100%;
 }
+
 #reverseSlideContentUp{
     -webkit-text-size-adjust:none;
     position: absolute;
@@ -381,6 +382,7 @@ background: #F1EEE6;
         position: absolute;
         padding-top: 2px;
         left: 50%;
+        margin-left: -62px;
         padding-bottom: 2px;
         white-space: nowrap;
         z-index: 999;
@@ -390,7 +392,6 @@ background: #F1EEE6;
         padding-left: 10px;
         padding-right: 10px;
         display: none;
-        transform: translateX(-50%);
         font-weight: 100;
         background: white;
         top: 87px;
