@@ -56,11 +56,13 @@ public class HomeController {
                     ip = request.getRemoteAddr();
                 }
                 
-
-                countUser.setUserIP(ip);
-                countUserRepository.save(countUser);
+                if(!(ip.contains("192.168.35"))||ip!="127.0.0.1"||ip!="211.49.2.85"){
+                    countUser.setUserIP(ip);
+                    countUserRepository.save(countUser);
+                    session.setAttribute("count", "nocount");
+                }
                 
-                session.setAttribute("count", "nocount");
+
             }
             
 
