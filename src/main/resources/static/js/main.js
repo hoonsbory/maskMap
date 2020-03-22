@@ -18,7 +18,7 @@ $(function () {
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(37.498614, 127.041503), //지도의 중심좌표.
-		level: 3 //지도의 레벨(확대, 축소 정도)ㅁ
+		level: 4 //지도의 레벨(확대, 축소 정도)ㅁ
 
 	};
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -27,30 +27,30 @@ $(function () {
 	var clusterer = new kakao.maps.MarkerClusterer({
 		map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
 		averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-		minLevel: 4 // 클러스터 할 최소 지도 레벨 
+		minLevel: 5 // 클러스터 할 최소 지도 레벨 
 	});
 	clusterer.setMinClusterSize(1);
 
 	$(".btn_close").click(function () {
-		setCookieMobile( "todayCookie", "done" , 1);
+		setCookieMobile("todayCookie", "done", 1);
 		$("#noticeClose").click();
 	});
-	
-	function setCookieMobile ( name, value, expiredays ) {
+
+	function setCookieMobile(name, value, expiredays) {
 		var todayDate = new Date();
-		todayDate.setDate( todayDate.getDate() + expiredays );
-		document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+		todayDate.setDate(todayDate.getDate() + expiredays);
+		document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";"
 	}
-	function getCookieMobile () {
+	function getCookieMobile() {
 		var cookiedata = document.cookie;
-		if ( cookiedata.indexOf("todayCookie=done") < 0 ){
+		if (cookiedata.indexOf("todayCookie=done") < 0) {
 			$("#notice").click();
 		}
 		else {
 			$("#noticeClose").click();
 		}
 	}
-	getCookieMobile();	
+	getCookieMobile();
 	//요일에 따른 상단바 정보 변경
 	var day = new Date;
 	var today = day.getDay();
@@ -97,7 +97,7 @@ $(function () {
 
 	}
 
-	
+
 	function panTo(lat, lng) {
 		// 이동할 위도 경도
 		var moveLatLon = new kakao.maps.LatLng(lat, lng);
@@ -140,6 +140,7 @@ $(function () {
 				}
 
 				// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+				map.setLevel(4);
 				map.setBounds(bounds);
 				sendAddress();
 			}
@@ -209,7 +210,7 @@ $(function () {
 	}
 
 	function contentListFnc(i, statColor, count) {
-		var contentList = '<li id="storename'+count+'" class="storeLi">' +
+		var contentList = '<li id="storename' + count + '" class="storeLi">' +
 			'<div class="storeName">' + i.name + '</div>' +
 			'<div class="distanceMe">' + i.code + '</div>' +
 			'<div class="remainStat"><div style="background : ' + statColor + ';" class="realStat">' + i.remain_stat + '</div></div>' +
@@ -320,33 +321,33 @@ $(function () {
 						//스위치를 통해 마커 색깔과 재고 색깔을 정해준다.
 						switch (jsonRemain) {
 							case '"plenty"': i.remain_stat = "충분", markerColor = "green.png", statColor = "#009473"
-							
+
 								break;
-								case '"some"': i.remain_stat = "보통", markerColor = "yellow.png", statColor = "#F0C05A"
-								
+							case '"some"': i.remain_stat = "보통", markerColor = "yellow.png", statColor = "#F0C05A"
+
 								break;
-								case '"few"': i.remain_stat = "부족", markerColor = "red.png", statColor = "#DD4124"
-								
+							case '"few"': i.remain_stat = "부족", markerColor = "red.png", statColor = "#DD4124"
+
 								break;
-								case '"empty"': i.remain_stat = "없음", markerColor = "gray.png", statColor = "#84898C"
-								
+							case '"empty"': i.remain_stat = "없음", markerColor = "gray.png", statColor = "#84898C"
+
 								break;
-								case '"break"': i.remain_stat = "없음", markerColor = "gray.png", statColor = "#84898C"
-								
+							case '"break"': i.remain_stat = "없음", markerColor = "gray.png", statColor = "#84898C"
+
 								break;
-								case "null": i.remain_stat = "없음", markerColor = "gray.png", statColor = "#84898C"
-								
+							case "null": i.remain_stat = "없음", markerColor = "gray.png", statColor = "#84898C"
+
 								break;
-								
-								default:
-									break;
-								}
-								if (!i.remain_stat){
-									i.remain_stat = "없음"
-									markerColor = "gray.png"
-									statColor = "#84898C"
-								} 
-								
+
+							default:
+								break;
+						}
+						if (!i.remain_stat) {
+							i.remain_stat = "없음"
+							markerColor = "gray.png"
+							statColor = "#84898C"
+						}
+
 						var imageSrc = '/static/img/' + markerColor, // 마커이미지의 주소입니다    
 							imageSize = new kakao.maps.Size(28, 36), // 마커이미지의 크기입니다
 							imageOption = { offset: new kakao.maps.Point(15, 42) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -361,17 +362,17 @@ $(function () {
 
 						});
 
-						
-					 
+
+
 						// 데이터를 가져오기 위해 jQuery를 사용합니다
 						// 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
-							// 데이터에서 좌표 값을 가지고 마커를 표시합니다
-							// 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
-							
-					
-							// 클러스터러에 마커들을 추가합니다
-							
-						if(document.getElementById("wrap")) document.getElementById("wrap").parentNode.style.zIndex = "900"
+						// 데이터에서 좌표 값을 가지고 마커를 표시합니다
+						// 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
+
+
+						// 클러스터러에 마커들을 추가합니다
+
+						if (document.getElementById("wrap")) document.getElementById("wrap").parentNode.style.zIndex = "900"
 
 						var content = contentListFnc2(i, statColor)
 
@@ -527,9 +528,9 @@ $(function () {
 
 
 				$("#storename" + count).click(function () {
-					
-					if(map.getLevel()>3){
-						map.setLevel(2);
+
+					if (map.getLevel() > 4) {
+						map.setLevel(3);
 					}
 					dragEventSWitch = false;
 					if (dragEventSWitch == false) panTo(i.lat, i.lng);
@@ -677,8 +678,8 @@ $(function () {
 				close.onclick = closeOverlay
 
 				$("#storename" + count).click(async function () {
-					if(map.getLevel()>3){
-						map.setLevel(2);
+					if (map.getLevel() > 4) {
+						map.setLevel(3);
 					}
 					dragEventSWitch = false;
 					if (dragEventSWitch == false) panTo(i.lat, i.lng);
@@ -801,7 +802,7 @@ $(function () {
 		if (navigator.geolocation) {
 			var geoOptions = {
 				maximumAge: 10000,
-				enableHighAccuracy : false,
+				enableHighAccuracy: false,
 			}
 			// if (navigator.geolocation) {
 			$(".loading").css("display", "block")
@@ -839,12 +840,12 @@ $(function () {
 		positionDeny = true;
 		switch (error.code) {
 			case 1: alert("위치 제공을 차단하셨습니다. 브라우저 설정을 통해 위치설정을 허용해주세요.")
-				
+
 				break;
 			case 2: alert("위치 정보가 제공되지 않는 기기이거나 위치 제공 기능이 꺼져있습니다.")
-				
+
 				break;
-		
+
 			default:
 				break;
 		}
@@ -855,20 +856,20 @@ $(function () {
 	$("#centerChange").click(function () {
 		sendAddress();
 	})
-	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-		
-		if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
-		
-	});
-	kakao.maps.event.addListener(map, 'zoom_changed', function() {        
-    
-		// 지도의 현재 레벨을 얻어옵니다
-		if(map.getLevel()>3){
+	kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
 
-			if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
+		if (beforeOverlay[0]) beforeOverlay[0].setMap(null)
+
+	});
+	kakao.maps.event.addListener(map, 'zoom_changed', function () {
+
+		// 지도의 현재 레벨을 얻어옵니다
+		if (map.getLevel() > 4) {
+
+			if (beforeOverlay[0]) beforeOverlay[0].setMap(null)
 		}
-		
-		
+
+
 	});
 	kakao.maps.event.addListener(map, 'tilesloaded', function () {
 		sendAddress();
@@ -876,7 +877,7 @@ $(function () {
 		// 	centerChBtn = false;
 		// }else{
 		// 	$("#centerChange").css("display", "block");
-			
+
 		// }
 
 	});

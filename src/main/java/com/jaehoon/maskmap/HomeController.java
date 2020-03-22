@@ -57,6 +57,7 @@ public class HomeController {
                 }
                 
                 if(ip.contains("192.168.35")||ip=="127.0.0.1"||ip=="211.49.2.85"){
+                    return "index";
                 }else{
                     countUser.setUserIP(ip);
                     countUserRepository.save(countUser);
