@@ -5,7 +5,6 @@ $(function () {
 	var positionDeny = false;
 	var myPositionBtn = false;
 	var dragEventSWitch = true;
-	var bottomListSwitch = false;
 	var myPositionMarker = [];
 	var menuSwitch = "stock";
 	var beforeOverlay = [];
@@ -15,19 +14,79 @@ $(function () {
 	var centerLat;
 	var centerLng;
 	var centerChBtn = false;
+	var firstLoad = false;
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(37.498614, 127.041503), //지도의 중심좌표.
-		level: 3 //지도의 레벨(확대, 축소 정도)ㅁ
+		level: 4 //지도의 레벨(확대, 축소 정도)ㅁ
 
 	};
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	map.setMaxLevel(9);
 
+	var geoOptions = {
+		maximumAge: 10000,
+		enableHighAccuracy: false,
+	}
+
+	function myPosition() {
+		$(".loading").css("display", "block")
+		if (navigator.geolocation) {
+			
+			// if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(callback, error, geoOptions)
+		} else {
+			alert("위치정보를 확인할 수 없어 기본 설정된 위치로 이동합니다.")
+			firstLoad = true;
+			positionDeny = true;
+			sendAddress();
+		}
+	}
+
+	function callback(pos) {
+		centerChBtn = true;
+		positionDeny = false;
+		centerLat = pos.coords.latitude
+		centerLng = pos.coords.longitude
+		panTo(centerLat,centerLng)
+		var imageSrc = '/static/img/myPoint.png', // 마커이미지의 주소입니다    
+			imageSize = new kakao.maps.Size(16, 16), // 마커이미지의 크기입니다
+			imageOption = { offset: new kakao.maps.Point(15, 42) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+			markerPosition = new kakao.maps.LatLng(centerLat, centerLng); // 마커가 표시될 위치입니다	
+
+		var marker = new kakao.maps.Marker({
+			map: map,
+			position: markerPosition,
+			image: markerImage
+
+		});
+		myPositionMarker.push(marker);
+		firstLoad = true;
+		sendAddress();
+	}
+
+	function error(error) {
+		positionDeny = true;
+		switch (error.code) {
+			case 1: alert("위치 제공을 차단하셨습니다. 브라우저 설정을 통해 위치설정을 허용해주세요.")
+
+				break;
+			case 2: alert("위치 정보가 제공되지 않는 기기이거나 위치 제공 기능이 꺼져있습니다.")
+
+				break;
+
+			default:
+				break;
+		}
+		sendAddress();
+	}
+	myPosition();
 	var clusterer = new kakao.maps.MarkerClusterer({
 		map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
 		averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-		minLevel: 4 // 클러스터 할 최소 지도 레벨 
+		minLevel: 5 // 클러스터 할 최소 지도 레벨 
 	});
 	clusterer.setMinClusterSize(1);
 
@@ -140,7 +199,7 @@ $(function () {
 				}
 
 				// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-				map.setLevel(3);
+				map.setLevel(4);
 				map.setBounds(bounds);
 				sendAddress();
 			}
@@ -241,9 +300,9 @@ $(function () {
 
 	//메인함수
 	function sendAddress() {
+		$(".loading").css("display", "block")
 		$(".storeLi").remove();
 		$("#centerChange").css("display", "none");
-		$(".loading").css("display", "block")
 		var latlng = [map.getCenter().getLat(), map.getCenter().getLng()]
 		var latlngJson = JSON.stringify(latlng)
 		$.ajax({
@@ -529,8 +588,8 @@ $(function () {
 
 				$("#storename" + count).click(function () {
 
-					if (map.getLevel() > 3) {
-						map.setLevel(2);
+					if (map.getLevel() > 4) {
+						map.setLevel(3);
 					}
 					dragEventSWitch = false;
 					if (dragEventSWitch == false) panTo(i.lat, i.lng);
@@ -678,8 +737,8 @@ $(function () {
 				close.onclick = closeOverlay
 
 				$("#storename" + count).click(async function () {
-					if (map.getLevel() > 3) {
-						map.setLevel(2);
+					if (map.getLevel() > 4) {
+						map.setLevel(3);
 					}
 					dragEventSWitch = false;
 					if (dragEventSWitch == false) panTo(i.lat, i.lng);
@@ -798,60 +857,7 @@ $(function () {
 			$('#reverseSlideContentUp').html("목록 열기")
 		}
 	});
-	function myPosition() {
-		if (navigator.geolocation) {
-			var geoOptions = {
-				maximumAge: 10000,
-				enableHighAccuracy: false,
-			}
-			// if (navigator.geolocation) {
-			$(".loading").css("display", "block")
-			navigator.geolocation.getCurrentPosition(callback, error, geoOptions)
-		} else {
-			alert("위치정보를 확인할 수 없어 기본 설정된 위치로 이동합니다.")
-			positionDeny = true;
-			sendAddress();
-		}
-	}
 
-	function callback(pos) {
-		centerChBtn = true;
-		positionDeny = false;
-		centerLat = pos.coords.latitude
-		centerLng = pos.coords.longitude
-		map.setCenter(new kakao.maps.LatLng(centerLat, centerLng))
-		var imageSrc = '/static/img/myPoint.png', // 마커이미지의 주소입니다    
-			imageSize = new kakao.maps.Size(16, 16), // 마커이미지의 크기입니다
-			imageOption = { offset: new kakao.maps.Point(15, 42) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-
-		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-			markerPosition = new kakao.maps.LatLng(centerLat, centerLng); // 마커가 표시될 위치입니다	
-
-		var marker = new kakao.maps.Marker({
-			map: map,
-			position: markerPosition,
-			image: markerImage
-
-		});
-		myPositionMarker.push(marker);
-		sendAddress();
-	}
-	function error(error) {
-		positionDeny = true;
-		switch (error.code) {
-			case 1: alert("위치 제공을 차단하셨습니다. 브라우저 설정을 통해 위치설정을 허용해주세요.")
-
-				break;
-			case 2: alert("위치 정보가 제공되지 않는 기기이거나 위치 제공 기능이 꺼져있습니다.")
-
-				break;
-
-			default:
-				break;
-		}
-		sendAddress();
-	}
-	myPosition();
 
 	$("#centerChange").click(function () {
 		sendAddress();
@@ -864,7 +870,7 @@ $(function () {
 	kakao.maps.event.addListener(map, 'zoom_changed', function () {
 
 		// 지도의 현재 레벨을 얻어옵니다
-		if (map.getLevel() > 3) {
+		if (map.getLevel() > 4) {
 
 			if (beforeOverlay[0]) beforeOverlay[0].setMap(null)
 		}
@@ -872,7 +878,7 @@ $(function () {
 
 	});
 	kakao.maps.event.addListener(map, 'tilesloaded', function () {
-		sendAddress();
+		if(firstLoad==true) sendAddress();
 		// if(centerChBtn==true){
 		// 	centerChBtn = false;
 		// }else{
