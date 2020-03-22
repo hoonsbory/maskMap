@@ -519,7 +519,7 @@ $(function () {
 						document.getElementById(i.addr).appendChild(close)
 						document.getElementById("wrap").parentNode.style.zIndex = "900"
 
-					}, 400);
+					}, 300);
 					dragEventSWitch = true;
 
 				})
@@ -671,7 +671,7 @@ $(function () {
 						document.getElementById(i.addr).appendChild(close)
 						document.getElementById("wrap").parentNode.style.zIndex = "900"
 
-					}, 400);
+					}, 300);
 					dragEventSWitch = true;
 				})
 				count++;
@@ -840,7 +840,8 @@ $(function () {
 	})
 
 	kakao.maps.event.addListener(map, 'tilesloaded', function () {
-		$("#centerChange").css("display", "block");
+		sendAddress();
+		// $("#centerChange").css("display", "block");
 
 	});
 });
