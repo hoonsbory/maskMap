@@ -18,7 +18,7 @@ $(function () {
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(37.498614, 127.041503), //지도의 중심좌표.
-		level: 4 //지도의 레벨(확대, 축소 정도)ㅁ
+		level: 3 //지도의 레벨(확대, 축소 정도)ㅁ
 
 	};
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -27,7 +27,7 @@ $(function () {
 	var clusterer = new kakao.maps.MarkerClusterer({
 		map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
 		averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-		minLevel: 5 // 클러스터 할 최소 지도 레벨 
+		minLevel: 4 // 클러스터 할 최소 지도 레벨 
 	});
 	clusterer.setMinClusterSize(1);
 
@@ -140,7 +140,7 @@ $(function () {
 				}
 
 				// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-				map.setLevel(4);
+				map.setLevel(3);
 				map.setBounds(bounds);
 				sendAddress();
 			}
@@ -529,8 +529,8 @@ $(function () {
 
 				$("#storename" + count).click(function () {
 
-					if (map.getLevel() > 4) {
-						map.setLevel(3);
+					if (map.getLevel() > 3) {
+						map.setLevel(2);
 					}
 					dragEventSWitch = false;
 					if (dragEventSWitch == false) panTo(i.lat, i.lng);
@@ -678,8 +678,8 @@ $(function () {
 				close.onclick = closeOverlay
 
 				$("#storename" + count).click(async function () {
-					if (map.getLevel() > 4) {
-						map.setLevel(3);
+					if (map.getLevel() > 3) {
+						map.setLevel(2);
 					}
 					dragEventSWitch = false;
 					if (dragEventSWitch == false) panTo(i.lat, i.lng);
@@ -864,7 +864,7 @@ $(function () {
 	kakao.maps.event.addListener(map, 'zoom_changed', function () {
 
 		// 지도의 현재 레벨을 얻어옵니다
-		if (map.getLevel() > 4) {
+		if (map.getLevel() > 3) {
 
 			if (beforeOverlay[0]) beforeOverlay[0].setMap(null)
 		}

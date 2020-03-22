@@ -56,7 +56,7 @@ public class HomeController {
                     ip = request.getRemoteAddr();
                 }
                 
-                if(ip.contains("192.168.35")||ip=="127.0.0.1"||ip=="211.49.2.85"){
+                if(ip.contains("192.168.35")||ip.equals("127.0.0.1")||ip.equals("211.49.2.85")){
                     return "index";
                 }else{
                     countUser.setUserIP(ip);
