@@ -499,7 +499,7 @@ background: #F1EEE6;
     }
     .modal-body{
         overflow-y: auto;
-        max-height : 300px;
+        max-height : 200px;
         padding-top: 0;
         padding-bottom: 0;
     }
@@ -516,7 +516,8 @@ background: #F1EEE6;
         font-weight: 400;
     }
     .modal-dialog{
-        top: 10%;
+        top: 50%;
+        margin-top: -173px;
     }
     .modal-footer{
         border-top: none;
