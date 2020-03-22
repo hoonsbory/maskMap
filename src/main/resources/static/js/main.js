@@ -863,7 +863,6 @@ $(function () {
 	kakao.maps.event.addListener(map, 'zoom_changed', function() {        
     
 		// 지도의 현재 레벨을 얻어옵니다
-		console.log(map.getLevel())
 		if(map.getLevel()>3){
 
 			if(beforeOverlay[0]) beforeOverlay[0].setMap(null)
