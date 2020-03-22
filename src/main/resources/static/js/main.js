@@ -20,8 +20,27 @@ $(function () {
 
 	};
 
+	$(".btn_close").click(function () {
+		setCookieMobile( "todayCookie", "done" , 1);
+		$("#noticeClose").click();
+	});
+	
+	function setCookieMobile ( name, value, expiredays ) {
+		var todayDate = new Date();
+		todayDate.setDate( todayDate.getDate() + expiredays );
+		document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+	}
+	function getCookieMobile () {
+		var cookiedata = document.cookie;
+		if ( cookiedata.indexOf("todayCookie=done") < 0 ){
+			$("#notice").click();
+		}
+		else {
+			$("#noticeClose").click();
+		}
+	}
+	getCookieMobile();	
 	//요일에 따른 상단바 정보 변경
-
 	var day = new Date;
 	var today = day.getDay();
 	if (today == 0) {
@@ -83,7 +102,6 @@ $(function () {
 		beforeOverlay[0].setMap(null);
 	}
 
-	document.getElementById("notice").click();
 
 	// 주소로 좌표를 검색합니다
 	function addressSearch(address) {
@@ -766,8 +784,8 @@ $(function () {
 	function myPosition() {
 		if (navigator.geolocation) {
 			var geoOptions = {
-				maximumAge: 0,
-				enableHighAccuracy : false
+				maximumAge: 10000,
+				enableHighAccuracy : false,
 			}
 			// if (navigator.geolocation) {
 			$(".loading").css("display", "block")
@@ -802,7 +820,17 @@ $(function () {
 	}
 	function error(error) {
 		positionDeny = true;
-		alert("위치 제공을 차단하셨거나 지원하지 않습니다.")
+		switch (error.code) {
+			case 1: alert("위치 제공을 차단하셨습니다. 브라우저 설정을 통해 위치설정을 허용해주세요.")
+				
+				break;
+			case 2: alert("위치 정보가 제공되지 않는 기기이거나 위치 제공 기능이 꺼져있습니다.")
+				
+				break;
+		
+			default:
+				break;
+		}
 		sendAddress();
 	}
 	myPosition();
