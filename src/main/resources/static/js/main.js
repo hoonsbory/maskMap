@@ -289,7 +289,7 @@ $(function () {
 			'                <div id="overlayDistance" class="jibun ellipsis">' + i.code + '</div>' +
 			'                <div id="overlayStock" class="jibun ellipsis">' + i.type + '</div>' +
 			'                <div id="overlayStat" style="background : ' + statColor + '" class="jibun ellipsis">' + i.remain_stat + '</div>' +
-			'                <div><a href="https://map.kakao.com/link/to/' + i.name + "," + i.lat + "," + i.lng + '" target="_blank" class="link">길찾기</a></div>' +
+			'                <div><a href="https://map.kakao.com/link/to/' + i.name + "," + i.lat + "," + i.lng + '" id="openNavi" target="_blank" class="link">길찾기</a></div>' +
 			'            </div>' +
 			'        </div>' +
 			'    </div>' +
@@ -452,7 +452,12 @@ $(function () {
 							overlay.setMap(map);
 							beforeOverlay.push(overlay);
 							document.getElementById("wrap").parentNode.style.zIndex = "900"
-
+							document.getElementById("openNavi").onmouseenter = function(){
+								kakao.maps.event.removeListener(map, 'click', clickHandler)
+							}
+							document.getElementById("openNavi").onmouseleave = function(){
+								kakao.maps.event.addListener(map, 'click', clickHandler)
+							}
 						});
 
 						beforeMarker.push(marker);
@@ -600,6 +605,12 @@ $(function () {
 					overlay.setMap(map);
 					beforeOverlay.push(overlay);
 					dragEventSWitch = true;
+					document.getElementById("openNavi").onmouseenter = function(){
+						kakao.maps.event.removeListener(map, 'click', clickHandler)
+					}
+					document.getElementById("openNavi").onmouseleave = function(){
+						kakao.maps.event.addListener(map, 'click', clickHandler)
+					}
 				})
 
 				count++;
@@ -749,6 +760,12 @@ $(function () {
 					await overlay.setMap(map);
 					beforeOverlay.push(overlay);
 					dragEventSWitch = true;
+					document.getElementById("openNavi").onmouseenter = function(){
+						kakao.maps.event.removeListener(map, 'click', clickHandler)
+					}
+					document.getElementById("openNavi").onmouseleave = function(){
+						kakao.maps.event.addListener(map, 'click', clickHandler)
+					}
 				})
 				count++;
 
@@ -859,14 +876,11 @@ $(function () {
 	});
 
 
-	$("#centerChange").click(function () {
-		sendAddress();
-	})
-	kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-
-		if (beforeOverlay[0]) beforeOverlay[0].setMap(null)
-
-	});
+	var clickHandler = function(mouseEvent) {    
+		if (beforeOverlay[0]) beforeOverlay[0].setMap(null) 
+	}; 
+	kakao.maps.event.addListener(map, 'click', clickHandler)
+	
 	kakao.maps.event.addListener(map, 'zoom_changed', function () {
 
 		// 지도의 현재 레벨을 얻어옵니다
@@ -879,12 +893,7 @@ $(function () {
 	});
 	kakao.maps.event.addListener(map, 'tilesloaded', function () {
 		if(firstLoad==true) sendAddress();
-		// if(centerChBtn==true){
-		// 	centerChBtn = false;
-		// }else{
-		// 	$("#centerChange").css("display", "block");
-
-		// }
 
 	});
+	
 });
