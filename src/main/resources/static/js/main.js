@@ -420,7 +420,7 @@ $(function () {
 							image: markerImage
 
 						});
-
+						marker.setTitle("마커")
 
 
 						// 데이터를 가져오기 위해 jQuery를 사용합니다
@@ -431,7 +431,6 @@ $(function () {
 
 						// 클러스터러에 마커들을 추가합니다
 
-						if (document.getElementById("wrap")) document.getElementById("wrap").parentNode.style.zIndex = "900"
 
 						var content = contentListFnc2(i, statColor)
 
@@ -439,8 +438,10 @@ $(function () {
 						// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 						var overlay = new kakao.maps.CustomOverlay({
 							content: content,
-							position: markerPosition
+							position: markerPosition,
+							clickable : true
 						});
+						overlay.setZIndex(10)
 
 						//마커의 클릭이벤트 등록 전에 생성된 오버레이를 없애고 새 오버레이를 띄운다.
 						kakao.maps.event.addListener(marker, 'click', function () {
@@ -451,13 +452,12 @@ $(function () {
 							beforeOverlay = [];
 							overlay.setMap(map);
 							beforeOverlay.push(overlay);
-							document.getElementById("wrap").parentNode.style.zIndex = "900"
-							document.getElementById("openNavi").onmouseenter = function(){
-								kakao.maps.event.removeListener(map, 'click', clickHandler)
-							}
-							document.getElementById("openNavi").onmouseleave = function(){
-								kakao.maps.event.addListener(map, 'click', clickHandler)
-							}
+							// document.getElementById("openNavi").onmouseenter = function(){
+							// 	kakao.maps.event.removeListener(map, 'click', clickHandler)
+							// }
+							// document.getElementById("openNavi").onmouseleave = function(){
+							// 	kakao.maps.event.addListener(map, 'click', clickHandler)
+							// }
 						});
 
 						beforeMarker.push(marker);
@@ -587,9 +587,10 @@ $(function () {
 				);
 				var overlay = new kakao.maps.CustomOverlay({
 					content: content,
-					position: position
+					position: position,
+					clickable : true
 				});
-
+				overlay.setZIndex(10)
 
 				$("#storename" + count).click(function () {
 
@@ -605,12 +606,20 @@ $(function () {
 					overlay.setMap(map);
 					beforeOverlay.push(overlay);
 					dragEventSWitch = true;
-					document.getElementById("openNavi").onmouseenter = function(){
-						kakao.maps.event.removeListener(map, 'click', clickHandler)
-					}
-					document.getElementById("openNavi").onmouseleave = function(){
-						kakao.maps.event.addListener(map, 'click', clickHandler)
-					}
+					// document.getElementById("openNavi").onmouseenter = function(){
+					// 	kakao.maps.event.removeListener(map, 'click', clickHandler)
+					// }
+					// document.getElementById("openNavi").onmouseleave = function(){
+					// 	kakao.maps.event.addListener(map, 'click', clickHandler)
+					// }
+					// $("#openNavi").bind("touchstart",function(e){
+					// 	console.log(12)
+					// 	kakao.maps.event.removeListener(map, 'click', clickHandler)
+					
+					// });   
+					
+					
+					
 				})
 
 				count++;
@@ -740,9 +749,10 @@ $(function () {
 				);
 				var overlay = new kakao.maps.CustomOverlay({
 					content: content,
-					position: position
+					position: position,
+					clickable : true
 				});
-
+				overlay.setZIndex(10)
 				var close = document.createElement('div')
 				close.className = "close"
 				close.onclick = closeOverlay
@@ -760,12 +770,13 @@ $(function () {
 					await overlay.setMap(map);
 					beforeOverlay.push(overlay);
 					dragEventSWitch = true;
-					document.getElementById("openNavi").onmouseenter = function(){
-						kakao.maps.event.removeListener(map, 'click', clickHandler)
-					}
-					document.getElementById("openNavi").onmouseleave = function(){
-						kakao.maps.event.addListener(map, 'click', clickHandler)
-					}
+					// document.getElementById("openNavi").onmouseenter = function(){
+					// 	kakao.maps.event.removeListener(map, 'click', clickHandler)
+					// }
+					// document.getElementById("openNavi").onmouseleave = function(){
+					// 	kakao.maps.event.addListener(map, 'click', clickHandler)
+					// }
+					
 				})
 				count++;
 
@@ -874,10 +885,11 @@ $(function () {
 			$('#reverseSlideContentUp').html("목록 열기")
 		}
 	});
+	
 
-
-	var clickHandler = function(mouseEvent) {    
-		if (beforeOverlay[0]) beforeOverlay[0].setMap(null) 
+	var clickHandler = function(e) {    
+				 
+				if (beforeOverlay[0]) beforeOverlay[0].setMap(null) 
 	}; 
 	kakao.maps.event.addListener(map, 'click', clickHandler)
 	
