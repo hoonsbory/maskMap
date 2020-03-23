@@ -452,12 +452,7 @@ $(function () {
 							beforeOverlay = [];
 							overlay.setMap(map);
 							beforeOverlay.push(overlay);
-							// document.getElementById("openNavi").onmouseenter = function(){
-							// 	kakao.maps.event.removeListener(map, 'click', clickHandler)
-							// }
-							// document.getElementById("openNavi").onmouseleave = function(){
-							// 	kakao.maps.event.addListener(map, 'click', clickHandler)
-							// }
+							
 						});
 
 						beforeMarker.push(marker);
@@ -606,20 +601,6 @@ $(function () {
 					overlay.setMap(map);
 					beforeOverlay.push(overlay);
 					dragEventSWitch = true;
-					// document.getElementById("openNavi").onmouseenter = function(){
-					// 	kakao.maps.event.removeListener(map, 'click', clickHandler)
-					// }
-					// document.getElementById("openNavi").onmouseleave = function(){
-					// 	kakao.maps.event.addListener(map, 'click', clickHandler)
-					// }
-					// $("#openNavi").bind("touchstart",function(e){
-					// 	console.log(12)
-					// 	kakao.maps.event.removeListener(map, 'click', clickHandler)
-					
-					// });   
-					
-					
-					
 				})
 
 				count++;
@@ -770,13 +751,7 @@ $(function () {
 					await overlay.setMap(map);
 					beforeOverlay.push(overlay);
 					dragEventSWitch = true;
-					// document.getElementById("openNavi").onmouseenter = function(){
-					// 	kakao.maps.event.removeListener(map, 'click', clickHandler)
-					// }
-					// document.getElementById("openNavi").onmouseleave = function(){
-					// 	kakao.maps.event.addListener(map, 'click', clickHandler)
-					// }
-					
+				
 				})
 				count++;
 
@@ -817,6 +792,16 @@ $(function () {
 	})
 	$('#nearby').click(function () {
 		nearby();
+	})
+
+
+	$("#refresh").click(function(){
+		$("#refresh").css("background-color", "#0f4c81");
+		sendAddress();
+		setTimeout(() => {
+			$("#refresh").css("background-color", "white");	
+		}, 600);
+		
 	})
 
 	$("#myPosition").click(function () {

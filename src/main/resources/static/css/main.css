@@ -319,6 +319,28 @@ background: #F1EEE6;
         width: 36px;
         height: 36px;
     }
+    #refreshImg{
+        position: absolute;
+        left: 50%;
+        margin-left: -10px;
+        top: 54%;
+        margin-top: -10px;
+        width: 20px;
+        opacity: 0.8;
+    }
+    #refresh{
+        transition: background-color 1s ease; 
+        position: absolute;
+        bottom: 60px;
+        right: 11px;
+        z-index: 999;
+        padding: 7px;
+        border: 1px solid #A5B8D0;
+        background: white ;
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+    }
     #topBar{
         position: absolute;
         min-height: 40px;
@@ -625,6 +647,28 @@ position: absolute;
     left: 50%;
     margin-left: -20px;
     top: 50%;
+    margin-top: -20px;
+    width: 40px;
+}
+#refresh{
+    position: absolute;
+    bottom: 85px;
+    right: 11px;
+    z-index: 999;
+    padding: 7px;
+    border: 1px solid #A5B8D0;
+    background: white;
+    border-radius: 8px;
+    width: 60px;
+    height: 60px;
+    transition: background-color 2s ease; 
+}
+#refreshImg{
+    opacity: 0.8;
+    position: absolute;
+    left: 50%;
+    margin-left: -20px;
+    top: 54%;
     margin-top: -20px;
     width: 40px;
 }
