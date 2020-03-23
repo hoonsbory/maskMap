@@ -857,7 +857,9 @@ $(function () {
 			if (window.innerWidth < 1040) {
 				$('#myPosition').animate({ bottom: "42%" }, 400);
 				$('.remainInfo').animate({ bottom: "42%" }, 400);
-				$('#refresh').animate({ bottom: "51%" }, 400);
+				var height = window.innerHeight*(42/100)+42;
+				
+				$('#refresh').animate({ bottom: height+"px" }, 400);
 				$('#reverseSlideContentUp').animate({ bottom: "42%" }, 400);
 			} else {
 				$('#reverseSlideContentUp').animate({ bottom: "38%" }, 400);
