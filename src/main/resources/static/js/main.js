@@ -868,7 +868,9 @@ $(function () {
 		} else {
 			$('.slideUp').slideUp();
 			$('#myPosition').animate({ bottom: "18px" }, 400);
+			if (window.innerWidth < 1040) {
 			$('#refresh').animate({ bottom: "60px" }, 400);
+			}
 			$('#reverseSlideContentUp').animate({ bottom: "18px" }, 400);
 			$('.remainInfo').animate({ bottom: "18px" }, 400);
 			$('#reverseSlideContentUp').html("목록 열기")
