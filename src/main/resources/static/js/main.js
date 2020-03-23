@@ -857,6 +857,7 @@ $(function () {
 			if (window.innerWidth < 1040) {
 				$('#myPosition').animate({ bottom: "42%" }, 400);
 				$('.remainInfo').animate({ bottom: "42%" }, 400);
+				$('#refresh').animate({ bottom: "51%" }, 400);
 				$('#reverseSlideContentUp').animate({ bottom: "42%" }, 400);
 			} else {
 				$('#reverseSlideContentUp').animate({ bottom: "38%" }, 400);
@@ -865,6 +866,7 @@ $(function () {
 		} else {
 			$('.slideUp').slideUp();
 			$('#myPosition').animate({ bottom: "18px" }, 400);
+			$('#refresh').animate({ bottom: "60px" }, 400);
 			$('#reverseSlideContentUp').animate({ bottom: "18px" }, 400);
 			$('.remainInfo').animate({ bottom: "18px" }, 400);
 			$('#reverseSlideContentUp').html("목록 열기")
