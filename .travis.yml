@@ -18,8 +18,9 @@ cache:
     - '$HOME/.gradle'
 
 script: 
-      - ./mvnw clean package
       - echo "skipping tests"
+      - ./mvnw clean package
+      
 
 
 deploy:
