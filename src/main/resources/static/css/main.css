@@ -99,7 +99,7 @@
     font-family: NYJ Gothic;
     bottom: 40px;
     width: 288px;
-    height: 132px;
+    height: 142px;
     margin-left: -144px;
     text-align: left;
     overflow: hidden;
@@ -109,7 +109,7 @@
 .wrap * {padding: 0;margin: 0;}
 .wrap .info {
     width: 286px;
-    height: 105px;
+    height: 115px;
     margin-top: 15px;
     border-radius: 11px;
     border-bottom: 2px solid #ccc
@@ -130,9 +130,9 @@
     line-height: 20px;
     color: #373838 !important;
 }
-.info .close {position: absolute;top: 21px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+.info .close {position: absolute;top: 21px;right: 10px;color: #888;width: 17px;height: 17px;}
 .info .close:hover {cursor: pointer;}
-.info .body {position: relative;overflow: hidden;}
+.info .body {position: relative;}
 .info .desc {
     position: relative;
     height: 75px;
@@ -142,10 +142,17 @@
 .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .desc .jibun {
     font-size: 11px;
-    margin-top: 3px;
+    margin-top: 1px;
     font-weight: 100;
     display: inline;
     float: left;
+}
+#avgTime{
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    font-size: 11px;
+    transform: translateX(-50%);
 }
 #overlayAddress{
     padding-left: 11px;
@@ -170,7 +177,7 @@
     border-radius: 5px;
     /* display: block; */
     position: absolute;
-    bottom: 4px;
+    bottom: -6px;
     left: 50%;
     width: 204px;
     margin-left: -102px;

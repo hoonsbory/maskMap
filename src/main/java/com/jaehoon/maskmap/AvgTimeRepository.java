@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
  * CountUserRepository
  */
 @Repository
-public interface StoreInfoRepository extends JpaRepository<StoreInfo, String> {
+public interface AvgTimeRepository extends JpaRepository<AvgTime, String> {
 
-    List<StoreInfo> findByCode(String code);
     
-    void deleteByStockTime(String stockTime);
 }

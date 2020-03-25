@@ -32,7 +32,7 @@ $(function () {
 	function myPosition() {
 		$(".loading").css("display", "block")
 		if (navigator.geolocation) {
-			
+			firstLoad = true;
 			// if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(callback, error, geoOptions)
 		} else {
@@ -80,6 +80,7 @@ $(function () {
 			default:
 				break;
 		}
+		firstLoad = true;
 		sendAddress();
 	}
 	myPosition();
@@ -282,14 +283,15 @@ $(function () {
 			'    <div class="info">' +
 			'        <div id="' + i.addr + '" class="title">' +
 			i.name +
-			'        </div>' +
+			'       </div>' +
 			'        <div class="body">' +
 			'            <div class="desc">' +
 			'                <div id="overlayAddress" class="ellipsis">' + i.addr + '</div>' +
 			'                <div id="overlayDistance" class="jibun ellipsis">' + i.code + '</div>' +
 			'                <div id="overlayStock" class="jibun ellipsis">' + i.type + '</div>' +
 			'                <div id="overlayStat" style="background : ' + statColor + '" class="jibun ellipsis">' + i.remain_stat + '</div>' +
-			'                <div><a href="https://map.kakao.com/link/to/' + i.name + "," + i.lat + "," + i.lng + '" id="openNavi" target="_blank" class="link">길찾기</a></div>' +
+			'                <div><div id="avgTime" >최근 '+i.day+"일간 평균 입고 시간 - "+i.avgTime+'</div> ' +
+			'					  <a href="https://map.kakao.com/link/to/' + i.name + "," + i.lat + "," + i.lng + '" id="openNavi" target="_blank" class="link">길찾기</a></div>' +
 			'            </div>' +
 			'        </div>' +
 			'    </div>' +
@@ -313,12 +315,11 @@ $(function () {
 			contentType: 'application/json;charset=UTF-8',
 			success: function (data) {
 				result = JSON.parse(data);
-
 				//약국이 없을 때
-				if (result.count == 0) {
+				if (Object.keys(result).length == 0) {
 					$(".loading").css("display", "none")
 					var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : -77px">근처에 약국이 없습니다</div>'
-					result2.count = 0;
+					// result2.count = 0;
 					$(".storeList").append(noStores)
 					return
 
@@ -332,7 +333,7 @@ $(function () {
 					beforeMarker = [];
 					overlayList = [];
 					clusterer.clear();
-					result.stores.forEach(i => {
+					result.forEach(i => {
 						if (!i.stock_at || JSON.stringify(i.stock_at) == "null") {
 							i.type = "입고 대기";
 							var distanceResult = Math.round(distance(centerLat, centerLng, i.lat, i.lng))
@@ -493,13 +494,13 @@ $(function () {
 		$("#nearby").css("color", "#F1EEE6")
 		$("#nearby").css("border-bottom", "none")
 
-		if (result.count == 0) {
+		if (Object.keys(result).length == 0) {
 			var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : -77px">근처에 약국이 없습니다</div>'
 
 			$(".storeList").append(noStores)
 			return
 		}
-		result.stores.forEach(i => {
+		result.forEach(i => {
 
 			if (!i.stock_at || JSON.stringify(i.stock_at) == "null") {
 				i.type = 999; //입고 순 정렬을 위해 큰 수를 넣어 null값을 맨 밑으로 보냄.
@@ -513,7 +514,7 @@ $(function () {
 			}
 		})
 
-		result.stores.sort(function (a, b) {
+		result.sort(function (a, b) {
 			return b.type - a.type;
 		})
 
@@ -527,7 +528,7 @@ $(function () {
 			var counter = 0; //n번쨰 스크롤의 약국 수를 카운트 한다.
 			var breakCount = 0; //전체 약국 수를 카운트 한다.
 
-			result.stores.some(i => {
+			result.some(i => {
 				if (divCount > counter) { //전 스크롤에서 약국을 n개 생성했다면 이번 스크롤에서 n번쨰인덱스부터 n개더 생성해야하므로 n번쨰 인덱스까지 반복문을 Continue한다.
 					counter++;
 					return false;
@@ -607,7 +608,7 @@ $(function () {
 				divCount++;
 				counter++;
 				breakCount++;
-				if (result.stores.length < 11 && breakCount == result.stores.length) return true;
+				if (Object.keys(result).length < 11 && breakCount == Object.keys(result).length) return true;
 				if (breakCount == 11) {
 
 					return true;
@@ -620,7 +621,7 @@ $(function () {
 		$(".scrollDiv").on("scroll", function () {
 			var scrollHeight = $(".storeList").height();
 			var scrollPosition = $(".scrollDiv").height() + $(".scrollDiv").scrollTop();
-			if (scrollPosition > scrollHeight - 50 && divCount != result.stores.length) {
+			if (scrollPosition > scrollHeight - 50 && divCount != Object.keys(result).length) {
 				scrollContent();
 			}
 		});
@@ -644,20 +645,20 @@ $(function () {
 		$("#recentStock").css("color", "#F1EEE6")
 		$("#recentStock").css("border-bottom", "none")
 
-		if (result2.count == 0) {
+		if (Object.keys(result).length == 0) {
 			var noStores = '<div class="storeLi" style="position : absolute; left : 50%; top : 50%; margin-left : -77px">근처에 약국이 없습니다</div>'
 			$(".storeList").append(noStores)
 			return
 		}
 
 
-		result2.stores.forEach(i => {
+		result2.forEach(i => {
 			var distanceResult = Math.round(distance(centerLat, centerLng, i.lat, i.lng))
 			i.code = distanceResult;
 
 		})
 
-		result2.stores.sort(function (a, b) {
+		result2.sort(function (a, b) {
 			return a.code - b.code
 		})
 
@@ -671,7 +672,7 @@ $(function () {
 			var breakCount = 0;
 
 
-			result2.stores.some(i => {
+			result2.some(i => {
 				if (divCount > counter) {
 					counter++;
 					return false;
@@ -761,7 +762,7 @@ $(function () {
 				breakCount++;
 
 
-				if (result2.stores.length < 11 && breakCount == result2.stores.length) return true;
+				if (Object.keys(result).length < 11 && breakCount == Object.keys(result).length) return true;
 				if (breakCount == 11) {
 
 					return true;
@@ -776,7 +777,7 @@ $(function () {
 		$(".scrollDiv").on("scroll", function () {
 			var scrollHeight = $(".storeList").height();
 			var scrollPosition = $(".scrollDiv").height() + $(".scrollDiv").scrollTop();
-			if (scrollPosition > scrollHeight - 50 && divCount != result2.stores.length) {
+			if (scrollPosition > scrollHeight - 50 && divCount != Object.keys(result).length) {
 				scrollContent();
 			}
 		});
