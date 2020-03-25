@@ -15,11 +15,10 @@ spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://52.78.29.3:3306/dayoff?allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=UTF-8
-        username: vJTKRmElgUSVFmf27G3+RA==
-        password: vJTKRmElgUSVFmf27G3+RA==
+        username: ENC(vJTKRmElgUSVFmf27G3+RA==)
+        password: ENC(vJTKRmElgUSVFmf27G3+RA==)
 logging.file: /var/log/requestloggingweb.log
 
 server: 
     port: 443  
-
 
