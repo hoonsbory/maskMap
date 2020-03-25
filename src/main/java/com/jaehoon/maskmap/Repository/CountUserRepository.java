@@ -1,7 +1,8 @@
-package com.jaehoon.maskmap;
+package com.jaehoon.maskmap.Repository;
 
 
-import java.util.List;
+
+import com.jaehoon.maskmap.Entity.CountUser;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
@@ -11,9 +12,7 @@ import org.springframework.stereotype.Service;
  * CountUserRepository
  */
 @Repository
-public interface StoreInfoRepository extends JpaRepository<StoreInfo, String> {
+public interface CountUserRepository extends JpaRepository<CountUser, String> {
 
-    List<StoreInfo> findByCode(String code);
     
-    void deleteByStockTime(String stockTime);
 }

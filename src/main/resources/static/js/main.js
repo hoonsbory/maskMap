@@ -32,7 +32,6 @@ $(function () {
 	function myPosition() {
 		$(".loading").css("display", "block")
 		if (navigator.geolocation) {
-			firstLoad = true;
 			// if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(callback, error, geoOptions)
 		} else {
@@ -45,10 +44,11 @@ $(function () {
 
 	function callback(pos) {
 		centerChBtn = true;
+		firstLoad = true;
 		positionDeny = false;
 		centerLat = pos.coords.latitude
 		centerLng = pos.coords.longitude
-		panTo(centerLat,centerLng)
+		panTo(centerLat, centerLng)
 		var imageSrc = '/static/img/myPoint.png', // 마커이미지의 주소입니다    
 			imageSize = new kakao.maps.Size(16, 16), // 마커이미지의 크기입니다
 			imageOption = { offset: new kakao.maps.Point(15, 42) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -279,24 +279,45 @@ $(function () {
 		return contentList
 	}
 	function contentListFnc2(i, statColor) {
-		var content = '<div id="wrap" class="wrap">' +
-			'    <div class="info">' +
-			'        <div id="' + i.addr + '" class="title">' +
-			i.name +
-			'       </div>' +
-			'        <div class="body">' +
-			'            <div class="desc">' +
-			'                <div id="overlayAddress" class="ellipsis">' + i.addr + '</div>' +
-			'                <div id="overlayDistance" class="jibun ellipsis">' + i.code + '</div>' +
-			'                <div id="overlayStock" class="jibun ellipsis">' + i.type + '</div>' +
-			'                <div id="overlayStat" style="background : ' + statColor + '" class="jibun ellipsis">' + i.remain_stat + '</div>' +
-			'                <div><div id="avgTime" >최근 '+i.day+"일간 평균 입고 시간 - "+i.avgTime+'</div> ' +
-			'					  <a href="https://map.kakao.com/link/to/' + i.name + "," + i.lat + "," + i.lng + '" id="openNavi" target="_blank" class="link">길찾기</a></div>' +
-			'            </div>' +
-			'        </div>' +
-			'    </div>' +
-			'</div>';
+		var content;
+		if (!i.avgTime) { //평균 입고 시간 기록이 없을 때.
+			content = '<div id="wrap" class="wrap">' +
+				'    <div class="info">' +
+				'        <div id="' + i.addr + '" class="title">' +
+				i.name +
+				'       </div>' +
+				'        <div class="body">' +
+				'            <div class="desc">' +
+				'                <div id="overlayAddress" class="ellipsis">' + i.addr + '</div>' +
+				'                <div id="overlayDistance" class="jibun ellipsis">' + i.code + '</div>' +
+				'                <div id="overlayStock" class="jibun ellipsis">' + i.type + '</div>' +
+				'                <div id="overlayStat" style="background : ' + statColor + '" class="jibun ellipsis">' + i.remain_stat + '</div>' +
+				'                <div>' +
+				'					  <a href="https://map.kakao.com/link/to/' + i.name + "," + i.lat + "," + i.lng + '" id="openNavi" target="_blank" class="link">길찾기</a></div>' +
+				'            </div>' +
+				'        </div>' +
+				'    </div>' +
+				'</div>';
 
+		} else {
+			content = '<div id="wrap" class="wrap">' +
+				'    <div class="info">' +
+				'        <div id="' + i.addr + '" class="title">' +
+				i.name +
+				'       </div>' +
+				'        <div class="body">' +
+				'            <div class="desc">' +
+				'                <div id="overlayAddress" class="ellipsis">' + i.addr + '</div>' +
+				'                <div id="overlayDistance" class="jibun ellipsis">' + i.code + '</div>' +
+				'                <div id="overlayStock" class="jibun ellipsis">' + i.type + '</div>' +
+				'                <div id="overlayStat" style="background : ' + statColor + '" class="jibun ellipsis">' + i.remain_stat + '</div>' +
+				'                <div><div id="avgTime">최근 ' + i.day + "일간 평균 입고 시간 - " + i.avgTime + '</div> ' +
+				'					  <a href="https://map.kakao.com/link/to/' + i.name + "," + i.lat + "," + i.lng + '" id="openNavi" target="_blank" class="link">길찾기</a></div>' +
+				'            </div>' +
+				'        </div>' +
+				'    </div>' +
+				'</div>';
+		}
 		return content;
 	}
 
@@ -440,7 +461,7 @@ $(function () {
 						var overlay = new kakao.maps.CustomOverlay({
 							content: content,
 							position: markerPosition,
-							clickable : true
+							clickable: true
 						});
 						overlay.setZIndex(10)
 
@@ -453,7 +474,7 @@ $(function () {
 							beforeOverlay = [];
 							overlay.setMap(map);
 							beforeOverlay.push(overlay);
-							
+
 						});
 
 						beforeMarker.push(marker);
@@ -584,7 +605,7 @@ $(function () {
 				var overlay = new kakao.maps.CustomOverlay({
 					content: content,
 					position: position,
-					clickable : true
+					clickable: true
 				});
 				overlay.setZIndex(10)
 
@@ -732,13 +753,12 @@ $(function () {
 				var overlay = new kakao.maps.CustomOverlay({
 					content: content,
 					position: position,
-					clickable : true
+					clickable: true
 				});
 				overlay.setZIndex(10)
 				var close = document.createElement('div')
 				close.className = "close"
 				close.onclick = closeOverlay
-
 				$("#storename" + count).click(async function () {
 					if (map.getLevel() > 4) {
 						map.setLevel(3);
@@ -752,7 +772,7 @@ $(function () {
 					await overlay.setMap(map);
 					beforeOverlay.push(overlay);
 					dragEventSWitch = true;
-				
+
 				})
 				count++;
 
@@ -796,13 +816,13 @@ $(function () {
 	})
 
 
-	$("#refresh").click(function(){
+	$("#refresh").click(function () {
 		$("#refresh").css("background-color", "#0f4c81");
 		sendAddress();
 		setTimeout(() => {
-			$("#refresh").css("background-color", "white");	
+			$("#refresh").css("background-color", "white");
 		}, 600);
-		
+
 	})
 
 	$("#myPosition").click(function () {
@@ -858,9 +878,9 @@ $(function () {
 			if (window.innerWidth < 1040) {
 				$('#myPosition').animate({ bottom: "42%" }, 400);
 				$('.remainInfo').animate({ bottom: "42%" }, 400);
-				var height = window.innerHeight*(42/100)+42;
-				
-				$('#refresh').animate({ bottom: height+"px" }, 400);
+				var height = window.innerHeight * (42 / 100) + 42;
+
+				$('#refresh').animate({ bottom: height + "px" }, 400);
 				$('#reverseSlideContentUp').animate({ bottom: "42%" }, 400);
 			} else {
 				$('#reverseSlideContentUp').animate({ bottom: "38%" }, 400);
@@ -870,21 +890,21 @@ $(function () {
 			$('.slideUp').slideUp();
 			$('#myPosition').animate({ bottom: "18px" }, 400);
 			if (window.innerWidth < 1040) {
-			$('#refresh').animate({ bottom: "60px" }, 400);
+				$('#refresh').animate({ bottom: "60px" }, 400);
 			}
 			$('#reverseSlideContentUp').animate({ bottom: "18px" }, 400);
 			$('.remainInfo').animate({ bottom: "18px" }, 400);
 			$('#reverseSlideContentUp').html("목록 열기")
 		}
 	});
-	
 
-	var clickHandler = function(e) {    
-				 
-				if (beforeOverlay[0]) beforeOverlay[0].setMap(null) 
-	}; 
+
+	var clickHandler = function (e) {
+
+		if (beforeOverlay[0]) beforeOverlay[0].setMap(null)
+	};
 	kakao.maps.event.addListener(map, 'click', clickHandler)
-	
+
 	kakao.maps.event.addListener(map, 'zoom_changed', function () {
 
 		// 지도의 현재 레벨을 얻어옵니다
@@ -896,8 +916,8 @@ $(function () {
 
 	});
 	kakao.maps.event.addListener(map, 'tilesloaded', function () {
-		if(firstLoad==true) sendAddress();
+		if (firstLoad == true) sendAddress();
 
 	});
-	
+
 });

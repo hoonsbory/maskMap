@@ -1,7 +1,9 @@
-package com.jaehoon.maskmap;
+package com.jaehoon.maskmap.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,18 +22,17 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "countuser")
-public class CountUser {
+@Table(name = "avgTime")
+public class AvgTime {
 
     @Id
-    int count;
+    String code;
 
     @Column
-    String userIP;
+    String avgTime;
+
+    @Column
+    int day;
 
 
-   
-
-  
-    
 }

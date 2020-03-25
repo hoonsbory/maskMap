@@ -1,24 +1,19 @@
 package com.jaehoon.maskmap;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.JsonParser;
+import com.jaehoon.maskmap.Entity.AvgTime;
+import com.jaehoon.maskmap.Entity.CountUser;
+import com.jaehoon.maskmap.Repository.AvgTimeRepository;
+import com.jaehoon.maskmap.Repository.CountUserRepository;
+import com.jaehoon.maskmap.Repository.StoreInfoRepository;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -43,44 +37,6 @@ public class HomeController {
     @Autowired
     AvgTimeRepository avgTimeRepository;
 
-    public static void main(String[] args) {
-
-        // String a = "18.1";
-
-        // String b = a.substring(0,2);
-        // String c = a.substring(3, 4);
-
-        // System.out.println(a.length());
-        // System.out.println(b+c);
-
-        // StoreInfo a = new StoreInfo();
-        // a.setCode("1");
-        // a.setNum(1);
-        // a.setStockTime("153111200");
-        // StoreInfo b = new StoreInfo();
-        // b.setCode("1");
-        // b.setNum(2);
-        // b.setStockTime("1211120000");
-        // StoreInfo c = new StoreInfo();
-        // c.setCode("1");
-        // c.setNum(3);
-        // c.setStockTime("14021111");
-
-        // List<StoreInfo> list = new ArrayList<>();
-
-        // list.add(a);
-        // list.add(b);
-        // list.add(c);
-        // System.out.println(list);
-
-        // Collections.sort(list);
-
-        // System.out.println(list);
-        // String a = "14.95";
-        // String[] b = a.split("\\.");
-        // System.out.println(b[0]+"/"+b[1]);
-
-    }
 
     @RequestMapping(value = "/")
     public String home(HttpServletRequest request) {
@@ -125,7 +81,7 @@ public class HomeController {
     @ResponseBody
     public String address(@RequestBody String[] address) {
         String url = "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat=" + address[0]
-                + "&lng=" + address[1] + "&m=1000";
+                + "&lng=" + address[1] + "&m=2000";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8"))); // Response Header to

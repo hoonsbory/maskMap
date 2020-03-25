@@ -1,7 +1,9 @@
-package com.jaehoon.maskmap;
+package com.jaehoon.maskmap.Repository;
 
 
 import java.util.List;
+
+import com.jaehoon.maskmap.Entity.AvgTime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;

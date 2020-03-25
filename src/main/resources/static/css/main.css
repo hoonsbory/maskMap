@@ -152,6 +152,8 @@
     bottom: 12px;
     left: 50%;
     font-size: 11px;
+    color : #0f4c81;
+    font-weight: 100;
     transform: translateX(-50%);
 }
 #overlayAddress{

@@ -1,4 +1,4 @@
-package com.jaehoon.maskmap;
+package com.jaehoon.maskmap.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
