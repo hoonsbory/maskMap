@@ -19,6 +19,7 @@ cache:
 
 script: 
       - echo "skipping tests"
+      - ./mvnw clean package -Djasypt.encryptor.password=$PASSWORD
       
 
 
