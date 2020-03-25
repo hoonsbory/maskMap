@@ -30,6 +30,7 @@ deploy:
     region: ap-northeast-2
     skip_cleanup: true
     acl: public_read
+    edge: true
     wait-until-deployed: true
     on:
       repo: hoonsbory/maskMap #Github 주소
