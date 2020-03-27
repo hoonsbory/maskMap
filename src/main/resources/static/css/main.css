@@ -1,3 +1,77 @@
+#scrollImg{
+    width: 100px;
+    left: 50%;
+    height: 94px;
+    margin-left: -50px;
+    background: #0f4c81;
+    opacity: 0.8;
+    z-index: 999;
+    position: absolute;
+    top: 50%;
+    border-radius: 15px;
+    margin-top: -47px;
+}
+  a span {
+    position: absolute;
+    top: 17px;
+    left: 50%;
+    font-size: 12px;
+    color : #C0D725;
+    width: 30px;
+    height: 50px;
+    margin-left: -15px;
+    border: 2px solid #C0D725;
+    font-weight: 100;
+    border-radius: 50px;
+    box-sizing: border-box;
+  }
+  a span::before {
+    z-index: 999;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    content: '';
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    background-color: #C0D725;
+    border-radius: 100%;
+    -webkit-animation: sdb 1.5s infinite;
+    animation: sdb 1.5s infinite;
+    box-sizing: border-box;
+  }
+  @-webkit-keyframes sdb {
+    0% {
+      -webkit-transform: translate(0, 0);
+      opacity: 0;
+    }
+    40% {
+      opacity: 1;
+    }
+    80% {
+      -webkit-transform: translate(0, 20px);
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes sdb {
+    0% {
+      transform: translate(0, 0);
+      opacity: 0;
+    }
+    40% {
+      opacity: 1;
+    }
+    80% {
+      transform: translate(0, 20px);
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 .loading {
     width : 64px;
     height: 64px;
@@ -408,25 +482,6 @@ background: #F1EEE6;
     z-index: 999;
     top : 45px;
     }
-    #centerChange{
-        border: 1px solid #A5B8D0;
-        position: absolute;
-        padding-top: 2px;
-        left: 50%;
-        margin-left: -62px;
-        padding-bottom: 2px;
-        white-space: nowrap;
-        z-index: 999;
-        border-radius: 16px;
-        outline: 0;
-        font-size: 13px;
-        padding-left: 10px;
-        padding-right: 10px;
-        display: none;
-        font-weight: 100;
-        background: white;
-        top: 87px;
-    }
     #BarUl a{
     display: inline-block;
     height: 51px;
@@ -587,7 +642,7 @@ background: #F1EEE6;
     }
 
 
-@media(min-width: 1039px){
+@media(min-width: 1024px){
 #date{
     position: absolute;
     left: 0;
@@ -752,24 +807,6 @@ position: absolute;
     width: 100%;
     outline: none;
     padding-left: 10px;
-}
-#centerChange {
-    -webkit-text-size-adjust:none;
-    border: 1px solid #A5B8D0;
-    position: absolute;
-    left: 50%;
-    text-align: center;
-    z-index: 999;
-    margin-left: -66px;
-    border-radius: 16px;
-    outline: 0;
-    font-size: 11px;
-    padding: 3px;
-    width: 132px;
-    display: none;
-    font-weight: 100;
-    background: white;
-    top: 77px;
 }
 }
 @media(max-width : 336px){
