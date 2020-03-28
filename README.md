@@ -4,19 +4,19 @@
 
 
 
-<h3>-Stack
+<h3>-Stack <br>
 
-  <strong>framework</strong> : Spring Boot
+  framework : Spring Boot
   
-  <strong>Docker-load balancing</strong>(4 jdk containers) with Nginx(reverse proxy)
+  Docker-load balancing(4 jdk containers) with Nginx(reverse proxy)
   
-  <strong>CI</strong> : travis CI 
+  CI : travis CI 
   
-  <strong>storage</strong> : AWS S3
+ storage : AWS S3
   
-  <strong>DB</strong> : Mysql
+  DB: Mysql
   
-  <strong>deploy</strong> : AWS CodeDeploy
+  deploy : AWS CodeDeploy
 
 <img src="/src/main/resources/static/img/kakaoThumbnail.jpg" width="450px" height="300px" alt="maskpharm"></img>
 <img src="/maskpharm.jpg" width="300px" height="450" alt="maskpharm"></img>
