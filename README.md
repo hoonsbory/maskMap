@@ -14,4 +14,6 @@
   
   storage : AWS S3
   
+  DB : Mysql
+  
   deploy : AWS CodeDeploy
