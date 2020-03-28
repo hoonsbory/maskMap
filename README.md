@@ -28,7 +28,7 @@
 
 <strong>deploy</strong> : AWS CodeDeploy
 
-[mask-pharm.shop](https://mask-pharm.shop, "mask-pharm link")
+[mask-pharm.shop](https://mask-pharm.shop)
 
 <img style="margin-top : 0px;" src="/src/main/resources/static/img/kakaoThumbnail.jpg" width="450px" height="300px" alt="maskpharm"></img>
 <img src="/maskpharm.jpg" width="300px" height="450" alt="maskpharm"></img>
