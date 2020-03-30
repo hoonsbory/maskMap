@@ -37,7 +37,6 @@ public class StoreInfo implements Comparable<StoreInfo>{
 
 
   
-   
     // @Override
     // public int compareTo(StoreInfo arg0) {
     //        //내림차순 정렬
