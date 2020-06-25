@@ -1,34 +1,50 @@
-# maskMap
+
+<h1 align="center">Welcome to MaskPhram   👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+</p>
+
+>## Public Mask Stores Information Web 공적 마스크 판매처 정보 제공 웹
+
+### `Description`
+- Use Kakao Map Api
+- Responsive Web
+- Get json data from the public data portal site at 04:00 AM every day(using crontab), after parsing, calculating the average incoming time and storing it in the database.
+  <br> `Api에서 받아온 json데이터를 파싱 후 최대 7일간의 평균 입고 시간을 계산하여 크론탭으로 매일 새벽 4시에  DB에 Update함.`
+- Sort stores by Distance and Incoming time(Scroll Paging)
+
+### `Stack`
+- <strong>framework</strong> : Spring Boot
 
 
-시중에 나와 있는 공적마스크 판매처 제공 웹은 정렬기준이 없어 <strong>거리 순, 입고 순 정렬 기능</strong>을 추가했습니다.
+- <strong>Docker-load balancing</strong>(4 jdk containers) with Nginx(reverse proxy)
 
 
+- <strong>CI</strong> : travis CI 
 
 
+- <strong>storage</strong> : AWS S3
 
 
-<h3>-Stack</h3> <br>
+- <strong>DB</strong> : Mysql
 
 
- <strong>framework</strong> : Spring Boot
+- <strong>deploy</strong> : AWS CodeDeploy
 
+### 🏠 [Homepage](https://mask-pharm.shop)
+<img style="margin-top : 0px;" src="/src/main/resources/static/img/kakaoThumbnail.jpg" width="450px" height="300px" alt="maskpharm" />
 
-<strong>Docker-load balancing</strong>(4 jdk containers) with Nginx(reverse proxy)
+## Author
 
+👤 **JAEHUN SHIN  **
 
-<strong>CI</strong> : travis CI 
+* Website: https://hoonsbory.github.io/MyGitPage
+* Github: [@hoonsbory  ](https://github.com/hoonsbory  )
 
+## Show your support
 
-<strong>storage</strong> : AWS S3
+Give a ⭐️ if this project helped you!
 
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
 
- <strong>DB</strong> : Mysql
-
-
-<strong>deploy</strong> : AWS CodeDeploy
-
-[mask-pharm.shop](https://mask-pharm.shop)
-
-<img style="margin-top : 0px;" src="/src/main/resources/static/img/kakaoThumbnail.jpg" width="450px" height="300px" alt="maskpharm"></img>
-<img src="/maskpharm.jpg" width="300px" height="450" alt="maskpharm"></img>
