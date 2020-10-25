@@ -1,9 +1,4 @@
 #!/bin/bash
-cd /home/ubuntu/travis/maskMap
-
-chmod +x ./mvnw
-
-./mvnw clean package
 
 sudo docker stop server1
 sudo docker cp /home/ubuntu/travis/maskMap/target/maskmap-0.0.1-SNAPSHOT.jar server1:/
