@@ -33,12 +33,12 @@
 
 ### Images
 
-<img src="https://jaehoon-bucket.s3.ap-northeast-2.amazonaws.com/mask01.jpg">
+<img src="https://cdn.jsdelivr.net/gh/hoonsbory/MyGitPage@gh-pages/images/mask01.jpg">
 <div>
-<img width="400px" height="600px" src="https://jaehoon-bucket.s3.ap-northeast-2.amazonaws.com/mask02.jpg">
+<img width="400px" height="600px" src="https://cdn.jsdelivr.net/gh/hoonsbory/MyGitPage@gh-pages/images/mask02.jpg">
 <img width="400px" height="600px" src="https://jaehoon-bucket.s3.ap-northeast-2.amazonaws.com/mask03.jpg">
 </div>
-<img width="400px" height="600px" src="https://jaehoon-bucket.s3.ap-northeast-2.amazonaws.com/KakaoTalk_20201024_165501436.png">
+<img width="400px" height="600px" src="https://cdn.jsdelivr.net/gh/hoonsbory/MyGitPage@gh-pages/images/mask03.jpg">
 
 ### 🏠 [Homepage](https://mask-pharm.shop)
 <img style="margin-top : 0px;" src="/src/main/resources/static/img/kakaoThumbnail.jpg" width="450px" height="300px" alt="maskpharm" />
