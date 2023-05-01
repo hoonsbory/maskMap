@@ -36,24 +36,12 @@
 <img src="https://cdn.jsdelivr.net/gh/hoonsbory/MyGitPage@gh-pages/images/mask01.jpg">
 <div>
 <img width="400px" height="600px" src="https://cdn.jsdelivr.net/gh/hoonsbory/MyGitPage@gh-pages/images/mask02.jpg">
-<img width="400px" height="600px" src="https://jaehoon-bucket.s3.ap-northeast-2.amazonaws.com/mask03.jpg">
-</div>
 <img width="400px" height="600px" src="https://cdn.jsdelivr.net/gh/hoonsbory/MyGitPage@gh-pages/images/mask03.jpg">
+</div>
+
 
 ### 🏠 [Homepage](https://mask-pharm.shop)
 <img style="margin-top : 0px;" src="/src/main/resources/static/img/kakaoThumbnail.jpg" width="450px" height="300px" alt="maskpharm" />
 
 ## Author
-
-👤 **JAEHUN SHIN  **
-
-* Website: https://hoonsbory.github.io/MyGitPage
-* Github: [@hoonsbory  ](https://github.com/hoonsbory  )
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
 
