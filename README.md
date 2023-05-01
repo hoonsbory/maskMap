@@ -43,5 +43,4 @@
 ### 🏠 [Homepage](https://mask-pharm.shop)
 <img style="margin-top : 0px;" src="/src/main/resources/static/img/kakaoThumbnail.jpg" width="450px" height="300px" alt="maskpharm" />
 
-## Author
 
