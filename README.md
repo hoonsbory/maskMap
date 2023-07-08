@@ -10,7 +10,7 @@
 - Use Kakao Map Api
 - Responsive Web
 - Get json data from the public data portal site at 04:00 AM every day(using crontab), after parsing, calculating the average incoming time and storing it in the database.
-  <br> `Api에서 받아온 json데이터를 파싱 후 최대 7일간의 평균 입고 시간을 계산하여 크론탭으로 매일 새벽 4시에  DB에 Update함.`
+  <br> `Api에서 받아온 json데이터를 파싱 후 최대 7일간의 평균 입고 시간을 계산하여 크론탭으로 매일 새벽 4시에  DB에 Update합니다.`
 - Sort stores by Distance and Incoming time(Scroll Paging)
 
 ### `Stack`
